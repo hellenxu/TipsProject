@@ -1,0 +1,10 @@
+<resources xmlns:xliff="http://schemas.android.com/tools">
+    <string name="app_name">TipsProject</string>
+    <!--<string name="buy_kindle">我想买%s台<xliff:g id="Kindle">Kindle</xliff:g></string>-->
+
+    <plurals name="buy_kindle">
+        <!--<item quantity="zero">我不想买<xliff:g id="Kindle">KINDLE</xliff:g>.</item>-->
+        <item quantity="one">我想买一台<xliff:g id="Kindle">KINDLE</xliff:g>.</item>
+        <item quantity="other">我想买%d台<xliff:g id="Kindle">Kindle</xliff:g>.</item>
+    </plurals>
+</resources>
