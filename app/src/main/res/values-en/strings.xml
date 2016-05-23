@@ -6,4 +6,5 @@
         <item quantity="one">I want to buy a Kindle.</item>
         <item quantity="other">I want to buy %d Kindles.</item>
     </plurals>
+
 </resources>

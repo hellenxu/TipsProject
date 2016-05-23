@@ -8,8 +8,12 @@ android {
         applicationId "com.six.tipsproject"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
+        versionCode gitVersion()
         versionName "1.0"
+        manifestPlaceholders = [APP_TAG: 'release']
+        buildConfigField "String", "EMAIL", "\"release@six.ca\""
+        resValue "string", "res_sample", "hello world"
+        resConfigs "en"
     }
     buildTypes {
         release {
@@ -17,6 +21,40 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors{
+        google {
+            manifestPlaceholders = [APP_TAG: 'google']
+        }
+        anzhi {
+            manifestPlaceholders = [APP_TAG: 'anzhi']
+        }
+    }
+
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    signingConfigs {
+        debug {
+            storeFile file(properties.getProperty("DEBUG_STORE_FILE"))
+            storePassword properties.getProperty("DEBUG_STORE_PASSWORD")
+            keyAlias properties.getProperty("DEBUG_KEY_ALIAS")
+            keyPassword properties.getProperty("DEBUG_KEY_PASSWORD")
+        }
+        release {
+            storeFile file(properties.getProperty("RELEASE_STORE_FILE"))
+            storePassword properties.getProperty("RELEASE_STORE_PASSWORD")
+            keyAlias properties.getProperty("RELEASE_KEY_ALIAS")
+            keyPassword properties.getProperty("RELEASE_KEY_PASSWORD")
+        }
+    }
+}
+
+def gitVersion() {
+    if (!System.getenv('BUILD_NUMBER')) {
+        return 1
+    }
+    def cmd = 'git rev-list HEAD --first-parent --count'
+    cmd.execute().text.trim().toInteger()
 }
 
 dependencies {

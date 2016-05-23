@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.six.tipsproject.BuildConfig;
 import com.six.tipsproject.R;
 import com.six.tipsproject.log.CommonLogger;
 
@@ -36,5 +37,7 @@ public class StringsActivity extends Activity {
         CommonLogger.logD(TAG, quantityString);
         CommonLogger.logD(TAG, quantityString1);
         CommonLogger.logD(TAG, quantityString2);
+        CommonLogger.logD(TAG, BuildConfig.EMAIL);
+        CommonLogger.logD(TAG, res.getString(R.string.res_sample));
     }
 }

@@ -16,6 +16,11 @@ allprojects {
     repositories {
         jcenter()
     }
+
+    ext {
+        minSdkVersion = 15
+        targetSdkVersion = 23
+    }
 }
 
 task clean(type: Delete) {
