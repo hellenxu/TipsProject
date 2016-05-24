@@ -1,35 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
-
-    defaultConfig {
-        applicationId "com.six.tipsproject"
-        minSdkVersion 15
-        targetSdkVersion 23
-        versionCode gitVersion()
-        versionName "1.0"
-        manifestPlaceholders = [APP_TAG: 'release']
-        buildConfigField "String", "EMAIL", "\"release@six.ca\""
-        resValue "string", "res_sample", "hello world"
-        resConfigs "en"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    productFlavors{
-        google {
-            manifestPlaceholders = [APP_TAG: 'google']
-        }
-        anzhi {
-            manifestPlaceholders = [APP_TAG: 'anzhi']
-        }
-    }
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -47,18 +20,66 @@ android {
             keyPassword properties.getProperty("RELEASE_KEY_PASSWORD")
         }
     }
-}
 
-def gitVersion() {
-    if (!System.getenv('BUILD_NUMBER')) {
-        return 1
+    defaultConfig {
+        applicationId "com.six.tipsproject"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        manifestPlaceholders = [APP_TAG: 'release']
+        buildConfigField "String", "EMAIL", "\"release@six.ca\""
+        resValue "string", "res_sample", "hello world"
+        resConfigs "en"
     }
-    def cmd = 'git rev-list HEAD --first-parent --count'
-    cmd.execute().text.trim().toInteger()
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    productFlavors{
+        google {
+            manifestPlaceholders = [APP_TAG: 'google']
+        }
+        anzhi {
+            manifestPlaceholders = [APP_TAG: 'anzhi']
+        }
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.3.0'
+    testCompile rootProject.ext.dependencies["junit"]
+    compile rootProject.ext.dependencies["appcompat-v7"]
 }
+
+task checkSignInfo {
+    File propFile = project.rootProject.file('local.properties');
+    if(propFile.exists() && propFile.canRead()){
+        println("loading signing configuration...")
+        def Properties properties = new Properties()
+        properties.load(new FileInputStream(propFile))
+
+        if(properties.containsKey('RELEASE_STORE_FILE')
+                && properties.containsKey('RELEASE_STORE_PASSWORD')
+                && properties.containsKey('RELEASE_KEY_ALIAS')
+                && properties.containsKey('RELEASE_KEY_PASSWORD')){
+            android.signingConfigs.release.storeFile = file(properties['RELEASE_STORE_FILE'])
+            android.signingConfigs.release.storePassword = properties['RELEASE_STORE_PASSWORD']
+            android.signingConfigs.release.keyAlias = properties['RELEASE_KEY_ALIAS']
+            android.signingConfigs.release.keyPassword = properties['RELEASE_KEY_PASSWORD']
+        } else {
+            android.buildTypes.release.signingConfig = null
+            println('signing config found but some entries are missing.')
+        }
+    } else {
+        android.buildTypes.release.signingConfig = null
+        println('signing config not found')
+    }
+}
+assembleRelease.dependsOn checkSignInfo
+assembleAndroidTest.dependsOn checkSignInfo
