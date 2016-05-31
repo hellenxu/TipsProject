@@ -10,22 +10,25 @@ import com.six.tipsproject.R;
  * Created by Xiaolin on 2016-05-28.
  */
 public class DrawableActivity extends Activity {
-    private ImageView ivLoading;
     private LoadingDrawable loadingDrawable;
+    private RotateCircleLoading circleLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_loading);
 
-        ivLoading = (ImageView) findViewById(R.id.iv_loading);
-        loadingDrawable = new LoadingDrawable();
-        ivLoading.setBackground(loadingDrawable);
+        ImageView ivLoading = (ImageView) findViewById(R.id.iv_loading);
+//        loadingDrawable = new LoadingDrawable();
+//        ivLoading.setBackground(loadingDrawable);
+        circleLoading = new RotateCircleLoading();
+        ivLoading.setBackground(circleLoading);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        loadingDrawable.start();
+//        loadingDrawable.start();
+        circleLoading.start();
     }
 }
