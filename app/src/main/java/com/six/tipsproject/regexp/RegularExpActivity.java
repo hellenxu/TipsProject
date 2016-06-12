@@ -25,7 +25,7 @@ public class RegularExpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reg);
+        setContentView(R.layout.act_reg);
 
         etCelNum = (EditText) findViewById(R.id.et_cel);
         etEmail = (EditText) findViewById(R.id.et_email);
