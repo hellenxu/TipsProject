@@ -23,11 +23,11 @@ public class CircleMenuViewGroup extends ViewGroup{
     private int diameter;
     private int padding;
     private int startAngle;
-    private static final int[] RES_IDS = {R.drawable.account_normal, R.drawable.credit_normal,
-            R.drawable.features_normal, R.drawable.finance_normal, R.drawable.sec_center_normal,
-            R.drawable.transfer_normal};
-    private static final String[] TITLES = {"Account", "Credit", "Features", "Finance",
-            "Sec", "Transfer"};
+    private static final int[] RES_IDS = {R.drawable.account_balance, R.drawable.credit_card,
+            R.drawable.feedback, R.drawable.home, R.drawable.settings,
+            R.drawable.account_circle};
+    private static final String[] TITLES = {"Balance", "Credit", "Features", "Home",
+            "Settings", "Account"};
 
     public CircleMenuViewGroup(Context context) {
         this(context, null);

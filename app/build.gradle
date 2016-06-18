@@ -49,6 +49,7 @@ dependencies {
     compile rootProject.ext.dependencies["appcompat-v7"]
     compile 'ca.six.util:LogUtil:1.0.1'
     compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'de.greenrobot:eventbus:2.4.0'
 }
 
 //task checkSignInfo {
