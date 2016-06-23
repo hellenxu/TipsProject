@@ -9,6 +9,9 @@ import com.six.tipsproject.BuildConfig;
 import com.six.tipsproject.R;
 import com.six.tipsproject.log.CommonLogger;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 
 /**
  * Created by Xiaolin on 2016-05-10.
@@ -39,5 +42,14 @@ public class StringsActivity extends Activity {
         CommonLogger.logD(TAG, quantityString2);
         CommonLogger.logD(TAG, BuildConfig.EMAIL);
         CommonLogger.logD(TAG, res.getString(R.string.res_sample));
+        List<String> content = new CopyOnWriteArrayList<>();
+        content.add("item00");
+        content.add("item00");
+        content.add("item00");
+        content.add("item00");
+
+        for(String item : content){
+            CommonLogger.logD(TAG, item);
+        }
     }
 }

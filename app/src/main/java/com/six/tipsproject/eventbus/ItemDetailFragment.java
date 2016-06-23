@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.six.tipsproject.R;
+import com.six.tipsproject.eventbus.six.SixEventBus;
 
 import de.greenrobot.event.EventBus;
 
@@ -21,7 +22,8 @@ public class ItemDetailFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
+        SixEventBus.getInstance().register(this);
     }
 
     @Override
@@ -31,7 +33,13 @@ public class ItemDetailFragment extends Fragment{
         return detailView;
     }
 
-    public void onEventMainThread(Item item){
+//    public void onEventMainThread(Item item){
+//        if(item != null){
+//            tvDetail.setText(item.content);
+//        }
+//    }
+
+    public void onEventMain(Item item){
         if(item != null){
             tvDetail.setText(item.content);
         }
@@ -40,6 +48,7 @@ public class ItemDetailFragment extends Fragment{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
+        SixEventBus.getInstance().unregister(this);
     }
 }
