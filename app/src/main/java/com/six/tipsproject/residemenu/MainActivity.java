@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        showToast("target: " + v.getId());
         switch (v.getId()){
             case R.id.tv_open:
                 resideMenu.openMenu();
