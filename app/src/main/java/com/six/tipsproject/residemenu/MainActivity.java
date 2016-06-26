@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.six.tipsproject.R;
 
@@ -28,16 +29,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView tvOpen = (TextView) findViewById(R.id.tv_open);
         tvOpen.setOnClickListener(this);
 
-        resideMenu = new ResideMenuLayout(this);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout leftMenu = (LinearLayout) inflater.inflate(R.layout.reside_menu, null);
+        TextView tvHome = (TextView) leftMenu.findViewById(R.id.tv_home);
+        TextView tvAccount = (TextView) leftMenu.findViewById(R.id.tv_account);
+        TextView tvSettings = (TextView) leftMenu.findViewById(R.id.tv_settings);
+        tvHome.setOnClickListener(this);
+        tvAccount.setOnClickListener(this);
+        tvSettings.setOnClickListener(this);
+        leftMenu.setOnClickListener(this);
+
+        resideMenu = new ResideMenuLayout(this);
         resideMenu.attachToActivity(this, leftMenu);
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.tv_open){
-            resideMenu.openMenu();
+        showToast("target: " + v.getId());
+        switch (v.getId()){
+            case R.id.tv_open:
+                resideMenu.openMenu();
+                break;
+            case R.id.tv_home:
+                showToast("Home");
+                break;
+            case R.id.tv_account:
+                showToast("Account");
+                break;
+            case R.id.tv_settings:
+                showToast("Settings");
+                break;
+            default:
+                resideMenu.closeMenu();
         }
+    }
+
+    private void showToast(String content){
+        Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
     }
 }
