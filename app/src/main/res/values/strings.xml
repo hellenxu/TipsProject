@@ -7,4 +7,5 @@
         <item quantity="one">我想买一台<xliff:g id="Kindle">KINDLE</xliff:g>.</item>
         <item quantity="other">我想买%d台<xliff:g id="Kindle">Kindle</xliff:g>.</item>
     </plurals>
+    <string name="hello_word">Hello</string>
 </resources>
