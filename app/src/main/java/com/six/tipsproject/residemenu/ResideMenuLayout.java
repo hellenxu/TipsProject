@@ -5,23 +5,20 @@ import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.graphics.Rect;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.six.tipsproject.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple version of ResideMenu
@@ -34,6 +31,7 @@ public class ResideMenuLayout extends FrameLayout {
     private LinearLayout subView;
     private View lefMenu;
     private Activity contentActivity;
+    private List<View> ignoredViews = new ArrayList<>();
 
     public ResideMenuLayout(Context context) {
         this(context, null);
@@ -96,5 +94,19 @@ public class ResideMenuLayout extends FrameLayout {
                 ObjectAnimator.ofFloat(contentView, SCALE_Y, 1));
         animSet.setDuration(300);
         animSet.start();
+    }
+
+    public void addIgnoredViews(@NonNull View view){
+        ignoredViews.add(view);
+    }
+
+    private boolean isInIgnoredView(MotionEvent ev) {
+        Rect rect = new Rect();
+        for (View v : ignoredViews) {
+            v.getGlobalVisibleRect(rect);
+            if (rect.contains((int) ev.getX(), (int) ev.getY()))
+                return true;
+        }
+        return false;
     }
 }
