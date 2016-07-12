@@ -6,6 +6,7 @@ import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.TextView
 import com.six.tipsproject.R
 import com.six.tipsproject.view.RVSampleAdapter
 import java.util.*
@@ -19,20 +20,20 @@ class CoordinatorSample : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.act_coordinator)
+        setContentView(R.layout.act_coordinator_nested)
 
         val colBar = findViewById(R.id.colToolbar) as CollapsingToolbarLayout
         colBar.title = getString(R.string.app_name)
         colBar.setExpandedTitleColor(Color.WHITE)
         colBar.setCollapsedTitleTextColor(Color.WHITE)
 
-        val data = ArrayList<String>()
-        for(i in 0..30){
-            data.add("title: " + i)
-        }
+//        val data = ArrayList<String>()
+//        for(i in 0..30){
+//            data.add("title: " + i)
+//        }
 
-        val recylerView = findViewById(R.id.rvDetails) as RecyclerView
-        recylerView.layoutManager = LinearLayoutManager(this)
-        recylerView.adapter = RVSampleAdapter(this, data)
+//        val recylerView = findViewById(R.id.rvDetails) as RecyclerView
+//        recylerView.layoutManager = LinearLayoutManager(this)
+//        recylerView.adapter = RVSampleAdapter(this, data)
     }
 }
