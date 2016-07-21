@@ -11,11 +11,11 @@
         <meta-data
             android:name="APP_TAG"
             android:value="${APP_TAG}" />
-        <activity android:name=".coordinatorLayout.CoordinatorSample">
+        <activity android:name=".view.TouchEventSample">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>\
+            </intent-filter>
         </activity>
     </application>
 
