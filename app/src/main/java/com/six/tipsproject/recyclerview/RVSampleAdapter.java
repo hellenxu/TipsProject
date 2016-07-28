@@ -1,4 +1,4 @@
-package com.six.tipsproject.view;
+package com.six.tipsproject.recyclerview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

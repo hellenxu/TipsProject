@@ -1,4 +1,4 @@
-package com.six.tipsproject.view;
+package com.six.tipsproject.recyclerview;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

@@ -1,4 +1,4 @@
-package com.six.tipsproject.view;
+package com.six.tipsproject.recyclerview;
 
 import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
