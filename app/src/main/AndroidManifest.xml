@@ -13,14 +13,16 @@
             android:name="APP_TAG"
             android:value="${APP_TAG}" />
 
-        <activity android:name=".drawer.DrawerActivity">
+        <activity android:name=".plastic.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".plastic.DetailsActivity" />
+        <activity android:name=".ipc.IPCThird" android:process=":remote"/>
+
+        <activity android:name=".plastic.DetailsActivity" android:process="com.six.tipsproject.remote"/>
     </application>
 
 </manifest>
