@@ -2,7 +2,12 @@ package com.six.tipsproject.strings;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.StyleSpan;
 import android.widget.TextView;
 
 import com.six.tipsproject.BuildConfig;
@@ -51,5 +56,11 @@ public class StringsActivity extends Activity {
         for(String item : content){
             CommonLogger.logD(TAG, item);
         }
+
+        TextView tvDes = (TextView) findViewById(R.id.tv_des);
+        SpannableString spanDes = new SpannableString(getString(R.string.much));
+        spanDes.setSpan(new AbsoluteSizeSpan(20, true), 1, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spanDes.setSpan(new StyleSpan(Typeface.BOLD_ITALIC), 20, 24, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        tvDes.setText(spanDes);
     }
 }
