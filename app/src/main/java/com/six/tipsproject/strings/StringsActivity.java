@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -69,28 +70,47 @@ public class StringsActivity extends Activity {
 
     public void showProgressDialog(View view) {
         final ProgressDialog dialog = new ProgressDialog(this);
-        dialog.setTitle("Please wait...");
+        dialog.setTitle("Please wait");
+        dialog.setMessage("Loading data...");
         dialog.setProgress(0);
-        dialog.setMax(100);
+//        dialog.setMax(100);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         dialog.show();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(dialog.getProgress() <= dialog.getMax()){
-                    try {
-                        Thread.sleep(6000);
-                        dialog.dismiss();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if(dialog.getProgress() == dialog.getMax()){
-                        dialog.dismiss();
-                    }
-                }
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                while(dialog.getProgress() <= dialog.getMax()){
+//                    try {
+//                        Thread.sleep(6000);
+//                        dialog.dismiss();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    if(dialog.getProgress() == dialog.getMax()){
+//                        dialog.dismiss();
+//                    }
+//                }
+//            }
+//        }).start();
 
+        new AsyncTask<Void, Integer, Void>(){
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    Thread.sleep(6000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                dialog.dismiss();
+            }
+        }.execute();
     }
 }

@@ -13,10 +13,9 @@ import android.view.View;
  * Created by Xiaolin on 2016-08-21.
  */
 public class PlayGifView extends View {
-    private static final int DEFAULT_MOVIE_DURATION = 1000;
     private Movie movie;
+    private int movieDuration;
     private long movieStart = 0;
-    private int currentAnimTime = 0;
 
     public PlayGifView(Context context) {
         this(context, null);
@@ -42,6 +41,7 @@ public class PlayGifView extends View {
 
     public void setMovieResId(int resId){
         movie = Movie.decodeStream(getResources().openRawResource(resId));
+        movieDuration = movie.duration();
         requestLayout();
     }
 
@@ -56,31 +56,15 @@ public class PlayGifView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if(movie != null){
-            updateAnim();
-            drawGif(canvas);
-            invalidate();
-        }else {
-            drawGif(canvas);
-        }
-    }
-
-    private void updateAnim(){
         long now = SystemClock.uptimeMillis();
         if(movieStart == 0){
             movieStart = now;
         }
 
-        int dur = movie.duration();
-        if(dur == 0){
-            dur = DEFAULT_MOVIE_DURATION;
-        }
-        currentAnimTime = (int) ((now - movieStart) % dur);
-    }
-
-    private void drawGif(Canvas canvas){
+        int currentAnimTime = (int) ((now - movieStart) % movieDuration);
         movie.setTime(currentAnimTime);
         movie.draw(canvas, 0, 0);
-        canvas.restore();
+
+        invalidate();
     }
 }
