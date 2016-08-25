@@ -27,6 +27,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class StringsActivity extends Activity {
     private final String TAG = StringsActivity.class.getSimpleName();
     private ProgressDialog dialog;
+    private View dialogView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,16 +67,19 @@ public class StringsActivity extends Activity {
         spanDes.setSpan(new AbsoluteSizeSpan(20, true), 1, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spanDes.setSpan(new StyleSpan(Typeface.BOLD_ITALIC), 20, 24, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         tvDes.setText(spanDes);
+
+        dialogView = findViewById(R.id.llay_progress_dialog);
     }
 
     public void showProgressDialog(View view) {
         final ProgressDialog dialog = new ProgressDialog(this);
         dialog.setTitle("Please wait");
-        dialog.setMessage("Loading data...");
-        dialog.setProgress(0);
+        dialog.setMessage("Loading data");
+//        dialog.setProgress(0);
 //        dialog.setMax(100);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         dialog.show();
+//        dialog.getWindow().getDecorView().setBackgroundColor(0x33000000);
 
 //        new Thread(new Runnable() {
 //            @Override
@@ -93,6 +97,7 @@ public class StringsActivity extends Activity {
 //                }
 //            }
 //        }).start();
+//        dialogView.setVisibility(View.VISIBLE);
 
         new AsyncTask<Void, Integer, Void>(){
 
@@ -110,6 +115,7 @@ public class StringsActivity extends Activity {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
                 dialog.dismiss();
+//                dialogView.setVisibility(View.GONE);
             }
         }.execute();
     }

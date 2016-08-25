@@ -41,4 +41,7 @@
         android:layout_marginTop="20dp"
         android:text="@string/show_loader"
         android:onClick="showProgressDialog"/>
+
+    <include layout="@layout/progress_dialog"/>
+
 </LinearLayout>
