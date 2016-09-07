@@ -21,5 +21,7 @@ public class SixDialog extends Dialog {
         super(context, cancelable, cancelListener);
     }
 
+    public static class Builder {
+    }
 
 }

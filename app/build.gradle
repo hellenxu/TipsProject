@@ -37,14 +37,14 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
-//    productFlavors{
-//        google {
-//            manifestPlaceholders = [APP_TAG: 'google']
-//        }
-//        anzhi {
-//            manifestPlaceholders = [APP_TAG: 'anzhi']
-//        }
-//    }
+    productFlavors{
+        google {
+            manifestPlaceholders = [APP_TAG: 'google']
+        }
+        anzhi {
+            manifestPlaceholders = [APP_TAG: 'anzhi']
+        }
+    }
 }
 
 dependencies {
