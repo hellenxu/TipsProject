@@ -38,7 +38,7 @@ public class CSpinnerAdapter extends CustomSpinnerAdapter {
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
         TextView view = (TextView) super.getView(position, convertView, parent);
-//        view.setTypeface(ytkTypeface);
+        view.setTypeface(ytkTypeface);
         view.setTextColor(Color.BLUE);
         Log.d("xxl", "Drop view: " + view + "; pos: " + position);
         return view;
