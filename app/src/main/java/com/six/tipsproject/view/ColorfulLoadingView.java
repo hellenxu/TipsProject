@@ -8,6 +8,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Xfermode;
 import android.graphics.drawable.Animatable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -35,11 +38,14 @@ public class ColorfulLoadingView extends View implements Animatable {
     private String currentProgress;
     private int textX, textY;
     private Bitmap originalBitmap, progressBitmap;
+    private Canvas progressCanvas;
+    private Xfermode srcTopXfermode;
+    private int bitmapLeft, bitmapWidth;
 
     private static final int DEFAULT_LOADING_COLOR = Color.parseColor("#57d2f7");
     private static final int DEFAULT_PAUSE_COLOR = Color.parseColor("#726dd1");
     private static final int DEFAULT_TEXT_SIZE = 12; //dp
-    private static final int DEFAULT_HEIGHT = 40; //dp
+    private static final int DEFAULT_HEIGHT = 30; //dp
     private static final String DOWNLOAD_LABEL = "Download ";
 
     public ColorfulLoadingView(Context context) {
@@ -61,6 +67,9 @@ public class ColorfulLoadingView extends View implements Animatable {
         winManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         metrics = new DisplayMetrics();
         originalBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.flicker);
+        srcTopXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP);
+        bitmapWidth = originalBitmap.getWidth();
+        bitmapLeft = -bitmapWidth;
 
         final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ColorLoadingBar);
         loadingColor = ta.getColor(R.styleable.ColorLoadingBar_loadingColor, DEFAULT_LOADING_COLOR);
@@ -76,6 +85,7 @@ public class ColorfulLoadingView extends View implements Animatable {
 
         progressPaint.setColor(loadingColor);
         progressPaint.setStyle(Paint.Style.FILL);
+        progressPaint.setXfermode(srcTopXfermode);
         framePaint.setColor(loadingColor);
         framePaint.setStyle(Paint.Style.STROKE);
         framePaint.setStrokeWidth(dp2px(2));
@@ -101,6 +111,11 @@ public class ColorfulLoadingView extends View implements Animatable {
     private void computeProgress(float percentage) {
         currentWidth = (int) (percentage * maxWidth);
         currentProgress = DOWNLOAD_LABEL + String.valueOf((int) (percentage * 100)) + "%";
+        if (bitmapLeft < currentWidth) {
+            bitmapLeft += dp2px(2);
+        } else {
+            bitmapLeft = -originalBitmap.getWidth();
+        }
     }
 
     @Override
@@ -141,7 +156,17 @@ public class ColorfulLoadingView extends View implements Animatable {
         canvas.drawRect(0, 0, getWidth(), getHeight(), framePaint);
 
         //step 2: draw progress
-        canvas.drawRect(0, 0, currentWidth, getHeight(), progressPaint);
+//        canvas.drawRect(0, 0, currentWidth, getHeight(), progressPaint);
+        progressBitmap = Bitmap.createBitmap(Math.max(1, currentWidth), getHeight(), Bitmap.Config.ARGB_8888);
+        progressCanvas = new Canvas(progressBitmap);
+        progressCanvas.drawColor(loadingColor);
+        if (isRunning()) {
+            progressPaint.setXfermode(srcTopXfermode);
+//            progressCanvas.drawBitmap(progressBitmap, bitmapLeft, 0, progressPaint); // mistake
+            progressCanvas.drawBitmap(originalBitmap, bitmapLeft, 0, progressPaint);
+            progressPaint.setXfermode(null);
+        }
+        canvas.drawBitmap(progressBitmap, 0, 0, null);
 
         //step 3: draw text
         textPaint.setColor(loadingColor);
@@ -154,9 +179,6 @@ public class ColorfulLoadingView extends View implements Animatable {
             canvas.drawText(currentProgress, textX, textY, textPaint);
             canvas.restore();
         }
-
-        //step 4: draw image
-        canvas.drawBitmap(originalBitmap, currentWidth, 0, null);
     }
 
     @Override
@@ -168,6 +190,7 @@ public class ColorfulLoadingView extends View implements Animatable {
     @Override
     public void stop() {
         loadingAnimator.cancel();
+        progressPaint.setColor(pauseColor);
     }
 
     @Override
