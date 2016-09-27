@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.six.tipsproject">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    
     <application
         android:name=".SixApplication"
         android:allowBackup="true"
@@ -13,7 +15,7 @@
             android:name="APP_TAG"
             android:value="${APP_TAG}" />
 
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".notification.PendingIntentDemo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,6 +25,12 @@
         <activity android:name=".ipc.IPCThird" android:process=":remote"/>
 
         <activity android:name=".plastic.DetailsActivity" android:process="com.six.tipsproject.remote"/>
+        <receiver android:name=".broadcast.SixBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

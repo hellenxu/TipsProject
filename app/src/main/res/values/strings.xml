@@ -14,4 +14,10 @@
         the title will automatically appear larger when the layout is fully visible, then transition to its default size as it is collapsed. Note that in those cases, you should call setTitle() on the CollapsingToolbarLayout, rather than on the Toolbar itself.</string>
     <string name="show_loader">show loader</string>
     <string name="switch_label">Switch Status</string>
+    <string name="pending_one_shot">One Shot</string>
+    <string name="pending_no_create">No Create</string>
+    <string name="cancel_current">Cancel Current</string>
+    <string name="update_current">Update Current</string>
+    <string name="pending_immutable">Immutable</string>
+    <string name="label_notification">Notification</string>
 </resources>

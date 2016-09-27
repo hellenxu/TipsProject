@@ -22,6 +22,8 @@ public class MainActivity extends Activity {
 //        playGifView.setMovieResId(R.drawable.bb8);
         setContentView(R.layout.act_color_loading);
         loadingView = ((ColorfulLoadingView)findViewById(R.id.loading));
+//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+//        telephonyManager.createForSubscriptionId(TelephonyManager.SIM_STATE_ABSENT);
     }
 
     @Override
@@ -32,7 +34,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onStop() {
-        super.onStop();
         loadingView.stop();
+        super.onStop();
     }
 }
