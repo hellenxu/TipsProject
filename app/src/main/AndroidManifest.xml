@@ -25,6 +25,13 @@
         <activity android:name=".ipc.IPCThird" android:process=":remote"/>
 
         <activity android:name=".plastic.DetailsActivity" android:process="com.six.tipsproject.remote"/>
+
+        <activity android:name=".drawable.DrawableActivity">
+            <intent-filter>
+                <action android:name="com.six.tips.pending"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <receiver android:name=".broadcast.SixBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>

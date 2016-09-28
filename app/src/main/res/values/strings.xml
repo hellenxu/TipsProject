@@ -20,4 +20,5 @@
     <string name="update_current">Update Current</string>
     <string name="pending_immutable">Immutable</string>
     <string name="label_notification">Notification</string>
+    <string name="implicit_intent">Implicit Intent</string>
 </resources>

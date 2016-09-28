@@ -71,6 +71,12 @@ public class PendingIntentDemo extends AppCompatActivity{
         mNotificationManager.notify(4, mBuilder.build());
     }
 
+    public void implicitIntent(View view){
+        Intent intent = new Intent("com.six.tips.pending");
+        mBuilder.setContentIntent(PendingIntent.getActivity(this, 5, intent, PendingIntent.FLAG_UPDATE_CURRENT));
+        mNotificationManager.notify(5, mBuilder.build());
+    }
+
     @Override
     protected void onStop() {
 //        mNotificationManager.cancelAll();
