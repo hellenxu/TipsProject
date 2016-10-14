@@ -47,6 +47,7 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
     productFlavors{
         google {
             manifestPlaceholders = [APP_TAG: 'google']
@@ -54,6 +55,10 @@ android {
         anzhi {
             manifestPlaceholders = [APP_TAG: 'anzhi']
         }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 }
 
