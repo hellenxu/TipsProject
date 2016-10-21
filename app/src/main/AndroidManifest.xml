@@ -2,6 +2,7 @@
     package="com.six.tipsproject">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_STK_COMMANDS"/>
     
     <application
         android:name=".SixApplication"
@@ -15,7 +16,7 @@
             android:name="APP_TAG"
             android:value="${APP_TAG}" />
 
-        <activity android:name=".notification.PendingIntentDemo">
+        <activity android:name=".broadcast.StkPermissionDemo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -37,6 +38,15 @@
         <receiver android:name=".broadcast.SixBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".broadcast.SixDeviceAdminReceiver"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data android:name="android.app.device_admin"
+                android:resource="@xml/device_admin_sample"/>
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED"/>
             </intent-filter>
         </receiver>
 
