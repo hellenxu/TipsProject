@@ -1,13 +1,19 @@
 package com.six.tipsproject.mockito;
 
 import android.content.Intent;
+import android.widget.TextView;
 
+import com.six.tipsproject.BuildConfig;
+import com.six.tipsproject.R;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -16,17 +22,28 @@ import static org.junit.Assert.assertNotNull;
  */
 
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest=Config.NONE)
+@Config(constants = BuildConfig.class, manifest=Config.NONE, sdk = 21)
 public class JumpToActivityTest {
+    private JumpToActivity target;
+    private TextView tvContent;
 
-    @Test
-    public void testJump(){
+    @Before
+    public void setUp(){
         Intent intent = new Intent();
         intent.putExtra(JumpToActivity.KEY_EXTRA_MESSAGE, "20161026");
 
-        JumpToActivity target =
-                Robolectric.buildActivity(JumpToActivity.class)
-                .withIntent(intent).visible().get();
+        target = Robolectric.buildActivity(JumpToActivity.class).withIntent(intent).create().get();
+        tvContent = (TextView) target.findViewById(R.id.tv_content);
+    }
+
+    @Test
+    public void testJumpSuc(){
         assertNotNull(target);
+    }
+
+    @Test
+    public void testText(){
+        assertNotNull(tvContent);
+        assertEquals("20161026", tvContent.getText());
     }
 }
