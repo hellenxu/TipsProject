@@ -3,7 +3,6 @@ package com.six.tipsproject.plastic;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +56,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         public HomeViewHolder(View itemView) {
             super(itemView);
             item = (TextView) itemView.findViewById(R.id.tv_name);
-            icon = (ImageView) itemView.findViewById(R.id.iv_avatar);
+            icon = (ImageView) itemView.findViewById(R.id.iv_avatar_left);
         }
     }
 }

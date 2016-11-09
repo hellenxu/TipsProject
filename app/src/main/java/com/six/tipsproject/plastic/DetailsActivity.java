@@ -18,7 +18,7 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_details);
 
-        ImageView ivAvatar = (ImageView) findViewById(R.id.iv_avatar);
+        ImageView ivAvatar = (ImageView) findViewById(R.id.iv_avatar_left);
         TextView tvId = (TextView) findViewById(R.id.tv_id);
         TextView tvName = (TextView) findViewById(R.id.tv_name);
         TextView tvActivated = (TextView) findViewById(R.id.tv_isActivated);

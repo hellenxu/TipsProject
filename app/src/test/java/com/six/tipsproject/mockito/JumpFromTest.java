@@ -56,6 +56,7 @@ public class JumpFromTest {
                 expectedIntent.getComponent().getClassName());
         assertEquals(shadowIntent.getStringExtra(KEY_EXTRA_MESSAGE),
                 expectedIntent.getStringExtra(KEY_EXTRA_MESSAGE));
+//        assertEquals(shadowIntent, expectedIntent);
     }
 
     @Test
