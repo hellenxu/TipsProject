@@ -53,6 +53,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".mockito.SampleReceiver">
+            <intent-filter>
+                <action android:name="ca.six.sample.broadcast"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
