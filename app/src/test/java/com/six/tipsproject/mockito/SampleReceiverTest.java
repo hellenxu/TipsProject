@@ -1,7 +1,10 @@
 package com.six.tipsproject.mockito;
 
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.telephony.TelephonyManager;
 
 import com.six.tipsproject.BuildConfig;
 
@@ -12,9 +15,11 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
+import org.robolectric.shadows.ShadowTelephonyManager;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.robolectric.Shadows.shadowOf;
 
 /**
  * @copyright six.ca
@@ -27,6 +32,7 @@ public class SampleReceiverTest {
 
     private SampleReceiver receiver;
     private Intent intent;
+    private Application app;
 
     @Before
     public void setUp(){
@@ -35,11 +41,16 @@ public class SampleReceiverTest {
         ShadowApplication.getInstance().registerReceiver(this.receiver, filter);
 
         this.intent = new Intent("ca.six.sample.broadcast");
-        RuntimeEnvironment.application.sendBroadcast(this.intent);
+        app = RuntimeEnvironment.application;
     }
 
     @Test
     public void testRegister(){
+        TelephonyManager telephonyManager = (TelephonyManager) app.getSystemService(Context.TELEPHONY_SERVICE);
+        ShadowTelephonyManager shadowTelManager = shadowOf(telephonyManager);
+        shadowTelManager.setNetworkCountryIso("CA"); // getNetworkCountryIso
+
+        RuntimeEnvironment.application.sendBroadcast(this.intent);
         assertTrue(ShadowApplication.getInstance().hasReceiverForIntent(this.intent));
     }
 

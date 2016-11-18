@@ -22,4 +22,5 @@
     <string name="label_notification">Notification</string>
     <string name="implicit_intent">Implicit Intent</string>
     <string name="request_stk">Request Stk</string>
+    <string name="label_open_stk">Open STK</string>
 </resources>
