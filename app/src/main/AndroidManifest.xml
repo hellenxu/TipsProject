@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.six.tipsproject">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.RECEIVE_STK_COMMANDS"/>
     
@@ -16,7 +18,7 @@
             android:name="APP_TAG"
             android:value="${APP_TAG}" />
 
-        <activity android:name=".ipc.JumpToSTK">
+        <activity android:name=".fragment.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -29,12 +31,12 @@
 
         <activity android:name=".drawer.DrawerActivity"/>
 
-        <activity android:name=".drawable.DrawableActivity">
-            <intent-filter>
-                <action android:name="com.six.tips.pending"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+        <!--<activity android:name=".drawable.DrawableActivity">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.six.tips.pending"/>-->
+                <!--<category android:name="android.intent.category.DEFAULT"/>-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
 
         <activity android:name=".mockito.JumpToActivity" />
 
@@ -59,6 +61,7 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".fragment.DialogActivity"/>
     </application>
 
 </manifest>

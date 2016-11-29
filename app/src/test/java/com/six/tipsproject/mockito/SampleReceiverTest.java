@@ -27,7 +27,7 @@ import static org.robolectric.Shadows.shadowOf;
  */
 
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
+@Config(constants = BuildConfig.class, sdk = 21)//WARNING: No manifest file found at .\AndroidManifest.xml.Falling back to the Android OS resources only.
 public class SampleReceiverTest {
 
     private SampleReceiver receiver;
