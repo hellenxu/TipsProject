@@ -48,12 +48,36 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
+    flavorDimensions "prod","isLogo"
+
     productFlavors{
         google {
-            manifestPlaceholders = [APP_TAG: 'google']
+            dimension "prod"
+//            manifestPlaceholders = [APP_TAG: 'google']
         }
         anzhi {
-            manifestPlaceholders = [APP_TAG: 'anzhi']
+            dimension "prod"
+//            manifestPlaceholders = [APP_TAG: 'anzhi']
+        }
+
+        xm {
+            dimension "prod"
+        }
+
+        need {
+            dimension "isLogo"
+        }
+
+        noneed {
+            dimension "isLogo"
+        }
+    }
+
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        println(names)
+        if(!names.contains("xm")&& names.contains("noneed")){
+            variant.ignore = true
         }
     }
 
