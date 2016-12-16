@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:id="@+id/llay_container" android:splitMotionEvents="false"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent" >
     <TextView
+        android:id="@+id/tv_loading"
         android:text="@string/xm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:layout_width="80dp"
+        android:layout_height="30dp" />
+    <TextView
+        android:id="@+id/tv_other"
+        android:layout_margin="20dp"
+        android:text="@string/label_fragment_two"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:layout_width="120dp"
+        android:layout_height="30dp" />
 </LinearLayout>
