@@ -30,4 +30,6 @@
     <string name="label_dialog_act">Dialog Activity</string>
     <string name="label_confirm">Confirm</string>
     <string name="xm">xm</string>
+
+    <string name="duration">%s min</string>
 </resources>

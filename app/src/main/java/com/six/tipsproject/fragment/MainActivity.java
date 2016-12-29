@@ -30,9 +30,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
             fragmentManager
                     .beginTransaction()
                     .replace(R.id.flay_content, new FragmentOne())
+                    .addToBackStack("tagOne")
                     .commit();
+            currentTab = "tagOne";
         }
     }
+
+    private String currentTab;
 
     @Override
     public void onClick(View v) {
@@ -41,13 +45,17 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 fragmentManager
                         .beginTransaction()
                         .replace(R.id.flay_content, new FragmentOne())
+                        .addToBackStack("tagOne")
                         .commit();
+                currentTab = "tagOne";
                 break;
             case R.id.label_frag_two:
                 fragmentManager
                         .beginTransaction()
                         .replace(R.id.flay_content, new FragmentTwo())
+                        .addToBackStack("tagTwo")
                         .commit();
+                currentTab = "tagTwo";
                 break;
         }
     }
@@ -56,5 +64,19 @@ public class MainActivity extends Activity implements View.OnClickListener{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         System.out.println("xxl-main");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if(outState == null){
+            outState = new Bundle();
+            outState.putString("currentTab", currentTab);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
     }
 }

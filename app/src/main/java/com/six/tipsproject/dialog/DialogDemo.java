@@ -3,6 +3,7 @@ package com.six.tipsproject.dialog;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.six.tipsproject.R;
@@ -22,7 +23,13 @@ public class DialogDemo extends Activity {
 
     public void showDialog(View view){
         final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.LoadingDialog);
-        builder.setView(R.layout.dialog_floating);
+        View dilaogView = LayoutInflater.from(this).inflate(R.layout.dialog_floating, null);
+        builder.setView(dilaogView);
         builder.create().show();
+
+        View parentView = (View)dilaogView.getParent();
+        View superParent = (View) parentView.getParent();
+        superParent.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//        parentView.setBackground(null);
     }
 }
