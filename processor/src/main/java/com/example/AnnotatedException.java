@@ -11,5 +11,12 @@ public class AnnotatedException extends Exception {
         exceptionMessage = msg;
     }
 
+    public AnnotatedException(String msg){
+        exceptionMessage = msg;
+    }
 
+    @Override
+    public String toString() {
+        return exceptionMessage;
+    }
 }

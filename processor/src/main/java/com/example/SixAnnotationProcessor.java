@@ -40,26 +40,28 @@ public class SixAnnotationProcessor extends AbstractProcessor{
     @Override
     public synchronized void init(ProcessingEnvironment proEnv) {
         super.init(proEnv);
+        System.out.println("xxl-init00");
         types = proEnv.getTypeUtils();
         elements = proEnv.getElementUtils();
         filer = proEnv.getFiler();
         messager = proEnv.getMessager();
     }
 
-    private void onProcessFailed(Element element){
-        messager.printMessage(Diagnostic.Kind.ERROR, "Processing Failed", element);
+    private void onProcessFailed(Element element, Exception e){
+        messager.printMessage(Diagnostic.Kind.ERROR, "Processing Failed " + e.toString(), element);
     }
 
     //TODO
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnv) {
+        System.out.println("xxl-process00");
         Set<? extends Element> sixAnnotatedClass = roundEnv.getElementsAnnotatedWith(SixAnnoation.class);
         for(Element element : sixAnnotatedClass){
             if(element.getKind() != ElementKind.CLASS){
                 try {
                     throw new AnnotatedException("Annotation %s should be used with class", SixAnnoation.class.getSimpleName());
                 } catch (AnnotatedException e) {
-                    onProcessFailed(element);
+                    onProcessFailed(element, e);
                 }
             } else {
                 TypeElement typeElement = (TypeElement) element;
@@ -71,9 +73,9 @@ public class SixAnnotationProcessor extends AbstractProcessor{
                     } else {
                         return true;
                     }
-                    generator.generateCode(sixAnnoClass);
+                    generator.generateCode(sixAnnoClass, filer);
                 } catch (AnnotatedException | IOException e) {
-                    onProcessFailed(element);
+                    onProcessFailed(element, e);
                 }
             }
         }
@@ -95,6 +97,7 @@ public class SixAnnotationProcessor extends AbstractProcessor{
     // 0) must have public modifier; 1) no abstract class; 2)no interface;
     // 3) must have an empty constructor; 4) type in annotation must be the same of superclass
     private boolean checkValidClass(SixAnnotatedClass item) throws AnnotatedException {
+        System.out.println("xxl-start check valid class");
         TypeElement itemElement = item.getTypeElement();
 
         // check public
@@ -116,28 +119,29 @@ public class SixAnnotationProcessor extends AbstractProcessor{
                         itemElement.getQualifiedName().toString(),
                         superClassElement.getQualifiedName().toString());
             }
-        } else {
-            // check empty constructor
-            TypeElement currentClass = itemElement;
-            while (true) {
-                TypeMirror superClassType = currentClass.getSuperclass();
-
-                if (superClassType.getKind() == TypeKind.NONE) {
-                    // Basis class (java.lang.Object) reached, so exit
-                    throw new AnnotatedException("The class %s annotated with @%s must inherit from %s",
-                            itemElement.getQualifiedName().toString(), SixAnnoation.class.getSimpleName(),
-                            item.getQualifiedClassName());
-                }
-
-                if (superClassType.toString().equals(item.getQualifiedClassName())) {
-                    // Required super class found
-                    break;
-                }
-
-                // Moving up in inheritance tree
-                currentClass = (TypeElement) types.asElement(superClassType);
-            }
         }
+//        else {
+//            // check empty constructor
+//            TypeElement currentClass = itemElement;
+//            while (true) {
+//                TypeMirror superClassType = currentClass.getSuperclass();
+//
+//                if (superClassType.getKind() == TypeKind.NONE) {
+//                    // Basis class (java.lang.Object) reached, so exit
+//                    throw new AnnotatedException("The class %s annotated with @%s must inherit from %s",
+//                            itemElement.getQualifiedName().toString(), SixAnnoation.class.getSimpleName(),
+//                            item.getQualifiedClassName());
+//                }
+//
+//                if (superClassType.toString().equals(item.getQualifiedClassName())) {
+//                    // Required super class found
+//                    break;
+//                }
+//
+//                // Moving up in inheritance tree
+//                currentClass = (TypeElement) types.asElement(superClassType);
+//            }
+//        }
 
         List<? extends Element> enclosedElements = itemElement.getEnclosedElements();
         for(Element enclosedElement : enclosedElements){

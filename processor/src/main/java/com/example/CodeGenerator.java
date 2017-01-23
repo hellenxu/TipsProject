@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.annotation.processing.Filer;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.type.TypeMirror;
 
@@ -19,35 +20,38 @@ import javax.lang.model.type.TypeMirror;
 public class CodeGenerator {
     private Map<String, SixAnnotatedClass> annotatedItems = new LinkedHashMap<>();
 
-    public void generateCode(SixAnnotatedClass annotatedClass) throws IOException {
+    //TODO 1) PackageName; 2) Import AnnotatedException; 3) return instance of Dinner.
+    public void generateCode(SixAnnotatedClass annotatedClass, Filer filer) throws IOException {
+        System.out.println("xxl-generate00");
         TypeMirror superClass = annotatedClass.getTypeElement().getSuperclass();
         MethodSpec.Builder methodBuilder =
                 MethodSpec.methodBuilder("getInstance")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                         .addParameter(String.class, "id")
                         .returns(superClass.getClass())
-                        .beginControlFlow("if(id == null || id.length == 0)")
-                        .addStatement("throw new AnnotatedException('id should not be empty')")
+                        .beginControlFlow("if(id == null)")
+                        .addStatement("throw new AnnotatedException(\"id should not be null\")")
                         .endControlFlow();
 
         for(SixAnnotatedClass item : annotatedItems.values()){
-            methodBuilder.beginControlFlow("if(id == $S)", item.getId())
+            System.out.println("xxl-condition00");
+            methodBuilder.beginControlFlow("if ($S.equals(id))", item.getId())
                     .addStatement("return new $T()", item.getTypeElement().getClass())
                     .endControlFlow();
         }
 
-        methodBuilder.beginControlFlow("throw new AnnotatedException('Unknown Id $S')")
-                .endControlFlow();
+        methodBuilder.addStatement("throw new AnnotatedException(\"Unknow Id: $S \")", annotatedClass.getId());
 
         TypeSpec helloAnnotation = TypeSpec.classBuilder(annotatedClass.getQualifiedSimpleName())
                 .addModifiers(Modifier.PUBLIC)
                 .addMethod(methodBuilder.build())
                 .build();
 
+        System.out.println("xxl-pkg: " + annotatedClass.getQualifiedClassName());
         JavaFile javaFile = JavaFile.builder(annotatedClass.getQualifiedClassName(), helloAnnotation)
                 .build();
 
-        javaFile.writeTo(System.out);
+        javaFile.writeTo(filer);
     }
 
     public void addAnnotatedClass(SixAnnotatedClass newItem) throws AnnotatedException {
