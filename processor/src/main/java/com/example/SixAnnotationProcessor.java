@@ -2,6 +2,7 @@ package com.example;
 
 import com.google.auto.service.AutoService;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -51,9 +52,32 @@ public class SixAnnotationProcessor extends AbstractProcessor{
 
     //TODO
     @Override
-    public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-
-        return false;
+    public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnv) {
+        Set<? extends Element> sixAnnotatedClass = roundEnv.getElementsAnnotatedWith(SixAnnoation.class);
+        for(Element element : sixAnnotatedClass){
+            if(element.getKind() != ElementKind.CLASS){
+                try {
+                    throw new AnnotatedException("Annotation %s should be used with class", SixAnnoation.class.getSimpleName());
+                } catch (AnnotatedException e) {
+                    onProcessFailed(element);
+                }
+            } else {
+                TypeElement typeElement = (TypeElement) element;
+                try {
+                    SixAnnotatedClass sixAnnoClass = new SixAnnotatedClass(typeElement);
+                    CodeGenerator generator = new CodeGenerator();
+                    if(checkValidClass(sixAnnoClass)){
+                        generator.addAnnotatedClass(sixAnnoClass);
+                    } else {
+                        return true;
+                    }
+                    generator.generateCode(sixAnnoClass);
+                } catch (AnnotatedException | IOException e) {
+                    onProcessFailed(element);
+                }
+            }
+        }
+        return true;
     }
 
     @Override
