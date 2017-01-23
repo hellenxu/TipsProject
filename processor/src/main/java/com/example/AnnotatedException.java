@@ -7,7 +7,7 @@ package com.example;
 public class AnnotatedException extends Exception {
     private String exceptionMessage;
 
-    public AnnotatedException(String msg){
+    public AnnotatedException(String msg, Object... args){
         exceptionMessage = msg;
     }
 
