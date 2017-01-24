@@ -27,8 +27,13 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
-import ca.six.example.SixAnnoation;
+import ca.six.example.SixAnnotation;
 
+
+/**
+ * @copyright six.ca
+ * Created by Xiaolin on 2017-01-23.
+ */
 
 @AutoService(Processor.class)
 public class SixAnnotationProcessor extends AbstractProcessor{
@@ -51,15 +56,14 @@ public class SixAnnotationProcessor extends AbstractProcessor{
         messager.printMessage(Diagnostic.Kind.ERROR, "Processing Failed " + e.toString(), element);
     }
 
-    //TODO
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnv) {
         System.out.println("xxl-process00");
-        Set<? extends Element> sixAnnotatedClass = roundEnv.getElementsAnnotatedWith(SixAnnoation.class);
+        Set<? extends Element> sixAnnotatedClass = roundEnv.getElementsAnnotatedWith(SixAnnotation.class);
         for(Element element : sixAnnotatedClass){
             if(element.getKind() != ElementKind.CLASS){
                 try {
-                    throw new AnnotatedException("Annotation %s should be used with class", SixAnnoation.class.getSimpleName());
+                    throw new AnnotatedException("Annotation %s should be used with class", SixAnnotation.class.getSimpleName());
                 } catch (AnnotatedException e) {
                     onProcessFailed(element, e);
                 }
@@ -67,7 +71,7 @@ public class SixAnnotationProcessor extends AbstractProcessor{
                 TypeElement typeElement = (TypeElement) element;
                 try {
                     SixAnnotatedClass sixAnnoClass = new SixAnnotatedClass(typeElement);
-                    CodeGenerator generator = new CodeGenerator();
+                    CodeGenerator generator = new CodeGenerator(elements);
                     if(checkValidClass(sixAnnoClass)){
                         generator.addAnnotatedClass(sixAnnoClass);
                     } else {
@@ -85,7 +89,7 @@ public class SixAnnotationProcessor extends AbstractProcessor{
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> annotations = new LinkedHashSet<>();
-        annotations.add(SixAnnoation.class.getCanonicalName());
+        annotations.add(SixAnnotation.class.getCanonicalName());
         return annotations;
     }
 

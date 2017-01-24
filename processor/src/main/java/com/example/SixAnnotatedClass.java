@@ -5,10 +5,11 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.MirroredTypeException;
 
-import ca.six.example.SixAnnoation;
+import ca.six.example.SixAnnotation;
 
 /**
- * Created by xiaolin on 23/01/17.
+ * @copyright six.ca
+ * Created by Xiaolin on 2017-09-22.
  */
 
 public class SixAnnotatedClass {
@@ -18,7 +19,7 @@ public class SixAnnotatedClass {
     private TypeElement typeElement;
 
     public SixAnnotatedClass(TypeElement typeElement) throws AnnotatedException {
-        SixAnnoation annoation = typeElement.getAnnotation(SixAnnoation.class);
+        SixAnnotation annoation = typeElement.getAnnotation(SixAnnotation.class);
         id = annoation.id();
 
         if(id == null || id.length() == 0){
@@ -52,4 +53,5 @@ public class SixAnnotatedClass {
     public TypeElement getTypeElement() {
         return typeElement;
     }
+
 }

@@ -3,6 +3,7 @@ package com.example;
 
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
@@ -11,44 +12,58 @@ import java.util.Map;
 
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.type.TypeMirror;
+import javax.lang.model.element.PackageElement;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.util.Elements;
 
 /**
- * Created by xiaolin on 23/01/17.
+ * @copyright six.ca
+ * Created by Xiaolin on 2017-01-23.
  */
 
 public class CodeGenerator {
     private Map<String, SixAnnotatedClass> annotatedItems = new LinkedHashMap<>();
+    private Elements elementsUtils;
 
-    //TODO 1) PackageName; 2) Import AnnotatedException; 3) return instance of Dinner.
+    private static final String SUFFIX = "Factory";
+
+    public CodeGenerator(Elements elementsUtils) {
+        this.elementsUtils = elementsUtils;
+    }
+
+    //TODO return interface
     public void generateCode(SixAnnotatedClass annotatedClass, Filer filer) throws IOException {
-        System.out.println("xxl-generate00");
-        TypeMirror superClass = annotatedClass.getTypeElement().getSuperclass();
+        final String factoryClassName = annotatedClass.getQualifiedSimpleName() + SUFFIX;
+        TypeElement superClassName = elementsUtils.getTypeElement(annotatedClass.getTypeElement().getQualifiedName());
+        PackageElement pkgElement = elementsUtils.getPackageOf(superClassName);
+        final String pkg = pkgElement.getQualifiedName().toString();
+
+        System.out.println("xxl-generate00: " + annotatedClass.getTypeElement().getSuperclass().toString());
         MethodSpec.Builder methodBuilder =
                 MethodSpec.methodBuilder("getInstance")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                         .addParameter(String.class, "id")
-                        .returns(superClass.getClass())
+                        .returns(TypeName.get(superClassName.asType()))
                         .beginControlFlow("if(id == null)")
-                        .addStatement("throw new AnnotatedException(\"id should not be null\")")
+                        .addStatement("throw new IllegalArgumentException(\"id should not be null\")")
                         .endControlFlow();
 
         for(SixAnnotatedClass item : annotatedItems.values()){
             System.out.println("xxl-condition00");
             methodBuilder.beginControlFlow("if ($S.equals(id))", item.getId())
-                    .addStatement("return new $T()", item.getTypeElement().getClass())
+                    .addStatement("return new $L()", item.getTypeElement().getQualifiedName().toString())
                     .endControlFlow();
         }
 
-        methodBuilder.addStatement("throw new AnnotatedException(\"Unknow Id: $S \")", annotatedClass.getId());
+        methodBuilder.addStatement("throw new IllegalArgumentException($S + id)", "Unknown id = ");
 
-        TypeSpec helloAnnotation = TypeSpec.classBuilder(annotatedClass.getQualifiedSimpleName())
+        TypeSpec helloAnnotation = TypeSpec.classBuilder(factoryClassName)
                 .addModifiers(Modifier.PUBLIC)
                 .addMethod(methodBuilder.build())
                 .build();
 
         System.out.println("xxl-pkg: " + annotatedClass.getQualifiedClassName());
-        JavaFile javaFile = JavaFile.builder(annotatedClass.getQualifiedClassName(), helloAnnotation)
+        JavaFile javaFile = JavaFile.builder(pkg, helloAnnotation)
                 .build();
 
         javaFile.writeTo(filer);

@@ -1,7 +1,8 @@
 package com.example;
 
 /**
- * Created by xiaolin on 23/01/17.
+ * @copyright six.ca
+ * Created by Xiaolin on 2017-01-23.
  */
 
 public class AnnotatedException extends Exception {

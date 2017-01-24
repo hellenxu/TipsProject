@@ -1,7 +1,8 @@
 package com.six.tipsproject.annotation;
 
 /**
- * Created by xiaolin on 23/01/17.
+ * @copyright six.ca
+ * Created by Xiaolin on 2016-09-22.
  */
 
 public interface Meal {

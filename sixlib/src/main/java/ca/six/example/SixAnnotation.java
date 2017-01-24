@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.TYPE)
-public @interface SixAnnoation {
+public @interface SixAnnotation {
     String id();
     Class type();
 }

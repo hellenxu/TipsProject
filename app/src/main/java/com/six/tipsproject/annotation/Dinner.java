@@ -1,15 +1,20 @@
 package com.six.tipsproject.annotation;
 
-import ca.six.example.SixAnnoation;
+import ca.six.example.SixAnnotation;
 
 /**
- * Created by xiaolin on 23/01/17.
+ * @copyright six.ca
+ * Created by Xiaolin on 2016-09-22.
  */
 
-@SixAnnoation(id = "Dinner", type = Meal.class)
+@SixAnnotation(id = "Dinner", type = Meal.class)
 public class Dinner implements Meal {
     @Override
     public float getPrice() {
         return 0.9f;
+    }
+
+    public Dinner(){
+
     }
 }
