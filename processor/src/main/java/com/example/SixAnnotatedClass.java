@@ -28,8 +28,9 @@ public class SixAnnotatedClass {
 
         this.typeElement = typeElement;
         try {
-            qualifiedClassName = typeElement.getQualifiedName().toString();
-            qualifiedSimpleName = typeElement.getSimpleName().toString();
+            Class <?> clazz = annoation.type();
+            qualifiedClassName = clazz.getCanonicalName();
+            qualifiedSimpleName = clazz.getSimpleName();
         } catch (MirroredTypeException mte){
             DeclaredType declaredType = (DeclaredType) mte.getTypeMirror();
             TypeElement annotatedClass = (TypeElement) declaredType.asElement();

@@ -24,21 +24,23 @@ import javax.lang.model.util.Elements;
 public class CodeGenerator {
     private Map<String, SixAnnotatedClass> annotatedItems = new LinkedHashMap<>();
     private Elements elementsUtils;
+    private String superQualifiedName;
 
     private static final String SUFFIX = "Factory";
 
-    public CodeGenerator(Elements elementsUtils) {
+    public CodeGenerator(Elements elementsUtils, String superQualifiedName) {
         this.elementsUtils = elementsUtils;
+        this.superQualifiedName = superQualifiedName;
     }
 
     //TODO return interface
     public void generateCode(SixAnnotatedClass annotatedClass, Filer filer) throws IOException {
         final String factoryClassName = annotatedClass.getQualifiedSimpleName() + SUFFIX;
-        TypeElement superClassName = elementsUtils.getTypeElement(annotatedClass.getTypeElement().getQualifiedName());
+        TypeElement superClassName = elementsUtils.getTypeElement(superQualifiedName);
         PackageElement pkgElement = elementsUtils.getPackageOf(superClassName);
         final String pkg = pkgElement.getQualifiedName().toString();
 
-        System.out.println("xxl-generate00: " + annotatedClass.getTypeElement().getSuperclass().toString());
+        System.out.println("xxl-generate00: " + superClassName.getQualifiedName().toString());
         MethodSpec.Builder methodBuilder =
                 MethodSpec.methodBuilder("getInstance")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -49,7 +51,8 @@ public class CodeGenerator {
                         .endControlFlow();
 
         for(SixAnnotatedClass item : annotatedItems.values()){
-            System.out.println("xxl-condition00");
+            System.out.println("xxl-size: " + annotatedItems.size());
+            System.out.println("xxl-condition00: " + item.getTypeElement().getQualifiedName().toString());
             methodBuilder.beginControlFlow("if ($S.equals(id))", item.getId())
                     .addStatement("return new $L()", item.getTypeElement().getQualifiedName().toString())
                     .endControlFlow();
