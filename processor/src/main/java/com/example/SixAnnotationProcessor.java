@@ -3,10 +3,8 @@ package com.example;
 import com.google.auto.service.AutoService;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -21,8 +19,6 @@ import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.TypeKind;
-import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
@@ -60,28 +56,28 @@ public class SixAnnotationProcessor extends AbstractProcessor{
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnv) {
         System.out.println("xxl-process00");
         Set<? extends Element> sixAnnotatedClass = roundEnv.getElementsAnnotatedWith(SixAnnotation.class);
+        CodeGenerator generator = new CodeGenerator(elements, "");
         for(Element element : sixAnnotatedClass){
-            if(element.getKind() != ElementKind.CLASS){
+            if(element instanceof TypeElement){
                 try {
-                    throw new AnnotatedException("Annotation %s should be used with class", SixAnnotation.class.getSimpleName());
-                } catch (AnnotatedException e) {
-                    onProcessFailed(element, e);
-                }
-            } else {
-                TypeElement typeElement = (TypeElement) element;
-                try {
-                    SixAnnotatedClass sixAnnoClass = new SixAnnotatedClass(typeElement);
-                    CodeGenerator generator = new CodeGenerator(elements);
-                    if(checkValidClass(sixAnnoClass)){
-                        generator.addAnnotatedClass(sixAnnoClass);
+                    TypeElement typeElement = (TypeElement) element;
+                    SixAnnotatedClass annotatedClass = new SixAnnotatedClass(typeElement);
+                    if (checkValidClass(annotatedClass)){
+                        generator.setSuperQualifiedName(annotatedClass.getQualifiedClassName());
+                        generator.addAnnotatedClass(annotatedClass);
                     } else {
                         return true;
                     }
-                    generator.generateCode(sixAnnoClass, filer);
-                } catch (AnnotatedException | IOException e) {
+                }catch (AnnotatedException e){
                     onProcessFailed(element, e);
                 }
             }
+        }
+
+        try {
+            generator.generateCode(filer);
+        } catch (IOException e) {
+            onProcessFailed(null, e);
         }
         return true;
     }

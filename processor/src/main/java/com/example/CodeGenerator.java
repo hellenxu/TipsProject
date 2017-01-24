@@ -33,43 +33,42 @@ public class CodeGenerator {
         this.superQualifiedName = superQualifiedName;
     }
 
-    //TODO return interface
-    public void generateCode(SixAnnotatedClass annotatedClass, Filer filer) throws IOException {
-        final String factoryClassName = annotatedClass.getQualifiedSimpleName() + SUFFIX;
-        TypeElement superClassName = elementsUtils.getTypeElement(superQualifiedName);
-        PackageElement pkgElement = elementsUtils.getPackageOf(superClassName);
-        final String pkg = pkgElement.getQualifiedName().toString();
+    public void generateCode(Filer filer) throws IOException {
+        System.out.println("xxl-generate: " + annotatedItems.size());
+        if(annotatedItems.size() > 0) {
+            TypeElement superClassName = elementsUtils.getTypeElement(superQualifiedName);
+            final String factoryClassName = superClassName.getSimpleName() + SUFFIX;
+            PackageElement pkgElement = elementsUtils.getPackageOf(superClassName);
+            final String pkg = pkgElement.getQualifiedName().toString();
 
-        System.out.println("xxl-generate00: " + superClassName.getQualifiedName().toString());
-        MethodSpec.Builder methodBuilder =
-                MethodSpec.methodBuilder("getInstance")
-                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                        .addParameter(String.class, "id")
-                        .returns(TypeName.get(superClassName.asType()))
-                        .beginControlFlow("if(id == null)")
-                        .addStatement("throw new IllegalArgumentException(\"id should not be null\")")
+            MethodSpec.Builder methodBuilder =
+                    MethodSpec.methodBuilder("getInstance")
+                            .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                            .addParameter(String.class, "id")
+                            .returns(TypeName.get(superClassName.asType()))
+                            .beginControlFlow("if(id == null)")
+                            .addStatement("throw new IllegalArgumentException(\"id should not be null\")")
+                            .endControlFlow();
+
+            for (SixAnnotatedClass item : annotatedItems.values()) {
+                System.out.println("xxl-return: " + item.getTypeElement().getQualifiedName().toString());
+                methodBuilder.beginControlFlow("if ($S.equals(id))", item.getId())
+                        .addStatement("return new $L()", item.getTypeElement().getQualifiedName().toString())
                         .endControlFlow();
+            }
 
-        for(SixAnnotatedClass item : annotatedItems.values()){
-            System.out.println("xxl-size: " + annotatedItems.size());
-            System.out.println("xxl-condition00: " + item.getTypeElement().getQualifiedName().toString());
-            methodBuilder.beginControlFlow("if ($S.equals(id))", item.getId())
-                    .addStatement("return new $L()", item.getTypeElement().getQualifiedName().toString())
-                    .endControlFlow();
+            methodBuilder.addStatement("throw new IllegalArgumentException($S + id)", "Unknown id = ");
+
+            TypeSpec helloAnnotation = TypeSpec.classBuilder(factoryClassName)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addMethod(methodBuilder.build())
+                    .build();
+
+            JavaFile javaFile = JavaFile.builder(pkg, helloAnnotation)
+                    .build();
+
+            javaFile.writeTo(filer);
         }
-
-        methodBuilder.addStatement("throw new IllegalArgumentException($S + id)", "Unknown id = ");
-
-        TypeSpec helloAnnotation = TypeSpec.classBuilder(factoryClassName)
-                .addModifiers(Modifier.PUBLIC)
-                .addMethod(methodBuilder.build())
-                .build();
-
-        System.out.println("xxl-pkg: " + annotatedClass.getQualifiedClassName());
-        JavaFile javaFile = JavaFile.builder(pkg, helloAnnotation)
-                .build();
-
-        javaFile.writeTo(filer);
     }
 
     public void addAnnotatedClass(SixAnnotatedClass newItem) throws AnnotatedException {
@@ -81,10 +80,18 @@ public class CodeGenerator {
         if(annotatedItems.containsKey(newItem.getId())){
             throw new AnnotatedException("Id conflicts. There is an annotated class has the id %s", newItem.getId());
         }
+
         annotatedItems.put(newItem.getId(), newItem);
+        for(String key : annotatedItems.keySet()){
+            System.out.println("xxl-item: " + annotatedItems.get(key));
+        }
     }
 
     public void clearItemList(){
         annotatedItems.clear();
+    }
+
+    public void setSuperQualifiedName(String superQualifiedName){
+        this.superQualifiedName = superQualifiedName;
     }
 }
