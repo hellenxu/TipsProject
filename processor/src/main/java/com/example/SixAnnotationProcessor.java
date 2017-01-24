@@ -145,7 +145,6 @@ public class SixAnnotationProcessor extends AbstractProcessor{
 //                // Moving up in inheritance tree
 //                currentClass = (TypeElement) types.asElement(superClassType);
 //            }
-//        }
 
         List<? extends Element> enclosedElements = itemElement.getEnclosedElements();
         for(Element enclosedElement : enclosedElements){
