@@ -19,7 +19,7 @@
             android:name="APP_TAG"
             android:value="${APP_TAG}" />
 
-        <activity android:name=".butterknife.SixButterKnifeSample">
+        <activity android:name=".drawer.DrawerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,7 +30,7 @@
 
         <activity android:name=".plastic.DetailsActivity" android:process="com.six.tipsproject.remote"/>
 
-        <activity android:name=".drawer.DrawerActivity"/>
+        <!--<activity android:name=".drawer.DrawerActivity"/>-->
 
         <!--<activity android:name=".drawable.DrawableActivity">-->
             <!--<intent-filter>-->

@@ -1,14 +1,18 @@
 package com.six.tipsproject.drawer;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.six.tipsproject.R;
@@ -29,6 +33,16 @@ public class DrawerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int mode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if(savedInstanceState == null) {
+            if (mode == Configuration.UI_MODE_NIGHT_YES) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            } else if (mode == Configuration.UI_MODE_NIGHT_NO) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+            recreate();
+        }
+
         setContentView(R.layout.act_drawer);
 
         CollapsingToolbarLayout coltbLayout = (CollapsingToolbarLayout) findViewById(R.id.colToolbar);
@@ -52,9 +66,11 @@ public class DrawerActivity extends AppCompatActivity {
                 }else {
                     Toast.makeText(DrawerActivity.this, "Activated: false", Toast.LENGTH_SHORT).show();
                 }
+                recreate();
             }
         });
 
         new HomeAsyncTask(this, adapter).execute();
     }
+
 }

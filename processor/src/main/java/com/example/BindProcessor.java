@@ -5,6 +5,7 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -53,12 +54,11 @@ public class BindProcessor extends AbstractProcessor {
                 String varType = varElement.asType().toString();
                 System.out.println("xxl-id: " + viewId + "; name: " + varName + "; type: " + varType);
             }
-            generateCode();
         }
         return false;
     }
 
-    private void generateCode(String packageName, String className, Map<String, String> paramList){
+    private void generateCode(String packageName, String className, Map<String, String> paramList) throws IOException{
         MethodSpec.Builder builder = MethodSpec.methodBuilder(METHOD_INJECT)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(Void.class);

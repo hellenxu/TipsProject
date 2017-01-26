@@ -48,38 +48,39 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    flavorDimensions "prod","isLogo"
-
-    productFlavors{
-        google {
-            dimension "prod"
-//            manifestPlaceholders = [APP_TAG: 'google']
-        }
-        anzhi {
-            dimension "prod"
-//            manifestPlaceholders = [APP_TAG: 'anzhi']
-        }
-
-        xm {
-            dimension "prod"
-        }
-
-        need {
-            dimension "isLogo"
-        }
-
-        noneed {
-            dimension "isLogo"
-        }
-    }
-
-    variantFilter { variant ->
-        def names = variant.flavors*.name
-        println(names)
-        if(!names.contains("xm")&& names.contains("noneed")){
-            variant.ignore = true
-        }
-    }
+    // flavorDimensions Sample
+//    flavorDimensions "prod","isLogo"
+//
+//    productFlavors{
+//        google {
+//            dimension "prod"
+////            manifestPlaceholders = [APP_TAG: 'google']
+//        }
+//        anzhi {
+//            dimension "prod"
+////            manifestPlaceholders = [APP_TAG: 'anzhi']
+//        }
+//
+//        xm {
+//            dimension "prod"
+//        }
+//
+//        need {
+//            dimension "isLogo"
+//        }
+//
+//        noneed {
+//            dimension "isLogo"
+//        }
+//    }
+//
+//    variantFilter { variant ->
+//        def names = variant.flavors*.name
+//        println(names)
+//        if(!names.contains("xm")&& names.contains("noneed")){
+//            variant.ignore = true
+//        }
+//    }
 
     testOptions {
         unitTests.returnDefaultValues = true
@@ -91,9 +92,9 @@ dependencies {
     compile rootProject.ext.dependencies["appcompat-v7"]
     compile 'ca.six.util:LogUtil:1.0.1'
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:24.2.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:design:24.2.0'
     compile 'ca.six.util:Permisssion6:1.0.1'
 
     //Testing dependencies

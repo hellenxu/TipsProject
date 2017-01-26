@@ -56,7 +56,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         public HomeViewHolder(View itemView) {
             super(itemView);
             item = (TextView) itemView.findViewById(R.id.tv_name);
-            icon = (ImageView) itemView.findViewById(R.id.iv_avatar_left);
+            icon = (ImageView) itemView.findViewById(R.id.iv_avatar);
         }
     }
 }
