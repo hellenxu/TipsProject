@@ -1,1 +1,1 @@
-include ':app', ':sixlib', ':processor'
+include ':app'
