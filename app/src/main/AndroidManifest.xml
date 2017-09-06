@@ -19,12 +19,15 @@
             android:name="APP_TAG"
             android:value="${APP_TAG}" />
 
-        <activity android:name=".drawer.DrawerActivity">
+
+        <activity android:name=".broadcast.BroadcastDemo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".drawer.DrawerActivity" />
 
         <activity android:name=".ipc.IPCThird" android:process=":remote"/>
 
@@ -45,6 +48,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="android.intent.action.ACTION_SHUTDOWN"/>
+                <!--<action android:name="ca.six.tips"/>-->
             </intent-filter>
         </receiver>
 
@@ -57,7 +61,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".mockito.SampleReceiver">
+        <receiver android:name=".mockito.SampleReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="ca.six.sample.broadcast"/>
             </intent-filter>
