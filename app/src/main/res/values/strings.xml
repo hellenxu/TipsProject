@@ -23,9 +23,11 @@
     <string name="implicit_intent">Implicit Intent</string>
     <string name="request_stk">Request Stk</string>
     <string name="label_open_stk">Open STK</string>
-    <string name="waiting">waiting...</string>
+    <string name="waiting">waiting…</string>
     <string name="label_fragment_one">Fragment One</string>
     <string name="label_fragment_two">Fragment Two</string>
+    <string name="label_fragment_three">Fragment Three</string>
+    <string name="label_request_loc">Request Location</string>
     <string name="label_load_dialog">Load Dialog</string>
     <string name="label_dialog_act">Dialog Activity</string>
     <string name="label_confirm">Confirm</string>

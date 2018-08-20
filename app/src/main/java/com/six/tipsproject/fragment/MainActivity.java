@@ -23,6 +23,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         findViewById(R.id.label_frag_one).setOnClickListener(this);
         findViewById(R.id.label_frag_two).setOnClickListener(this);
+        findViewById(R.id.label_frag_three).setOnClickListener(this);
 
         fragmentManager = getFragmentManager();
 
@@ -56,6 +57,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
                         .addToBackStack("tagTwo")
                         .commit();
                 currentTab = "tagTwo";
+                break;
+            case R.id.label_frag_three:
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.flay_content, new FragmentThree())
+                        .addToBackStack("tagThree")
+                        .commit();
+                currentTab = "tagThree";
                 break;
         }
     }
