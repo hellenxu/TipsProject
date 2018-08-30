@@ -28,7 +28,8 @@ public class StringsActivity extends Activity {
     private final String TAG = StringsActivity.class.getSimpleName();
     private ProgressDialog dialog;
     private View dialogView;
-
+    private static final String[] dayNames = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+    private static final String[] openHours = {"8:00 AM – 5:00 PM", "8:00 AM – 5:00 PM", "8:00 AM – 5:00 PM", "8:00 AM – 5:00 PM", "8:00 AM – 5:00 PM", "Closed", "Closed"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,13 @@ public class StringsActivity extends Activity {
         tvDes.setText(spanDes);
 
         dialogView = findViewById(R.id.llay_progress_dialog);
+
+        StringBuilder formattedString = new StringBuilder();
+        for(int i = 0; i < dayNames.length; i ++) {
+            formattedString.append(String.format("%-10s%-20s\n", dayNames[i], openHours[i]));
+        }
+
+        ((TextView)findViewById(R.id.hours)).setText(formattedString.toString());
     }
 
     public void showProgressDialog(View view) {
