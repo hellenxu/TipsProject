@@ -1,6 +1,7 @@
 package com.six.tipsproject.cardview
 
-import android.app.Activity
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -16,32 +17,49 @@ import kotlinx.android.synthetic.main.act_card.*
  * Created by Heavens on 2018-08-16.
  */
 class CarMainActivity : AppCompatActivity() {
+    private lateinit var userViewModel: UserViewModel
+    private lateinit var userObserver: Observer<User>
+    private lateinit var userBinding: ItemUserBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_card)
+
+        userBinding = ItemUserBinding.inflate(layoutInflater, null, false)
+        userViewModel = ViewModelProviders.of(CarMainActivity@ this).get(UserViewModel::class.java)
+
+        userObserver = Observer {
+            println("xxl-user-onchanged00")
+            userBinding.user = it
+            userBinding.setLifecycleOwner(CarMainActivity@this)
+            println("xxl-user-onchanged11")
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
 
         card_user.removeAllViews()
         card_profile.removeAllViews()
 
-        val userViewModel = ViewModelProviders.of(CarMainActivity@ this).get(UserViewModel::class.java)
-        val userBinding = ItemUserBinding.inflate(layoutInflater, null, false)
-        userViewModel.getUserInfo()
-        userViewModel.getUserData().observe(CarMainActivity@ this, Observer { user ->
-            userBinding.user = user
-        })
+        userViewModel.getUserData().reObserve(CarMainActivity@this, userObserver)
         card_user.addView(userBinding.root)
 
-        val profileViewModel = ViewModelProviders.of(CarMainActivity@ this).get(ProfileViewModel::class.java)
-        val profileBinding = ItemProfileBinding.inflate(layoutInflater, null, false)
-        profileViewModel.getProfile()
-        profileViewModel.getProfileData().observe(CarMainActivity@ this, Observer { profile ->
-            profileBinding.profile = profile
-        })
-        card_profile.addView(profileBinding.root)
+//        val profileViewModel = ViewModelProviders.of(CarMainActivity@ this).get(ProfileViewModel::class.java)
+//        val profileBinding = ItemProfileBinding.inflate(layoutInflater, null, false)
+//        profileViewModel.getProfileData().observe(CarMainActivity@ this, Observer { profile ->
+//            println("xxl-profile-onchanged00")
+//            profileBinding.profile = profile
+//            println("xxl-profile-onchanged11")
+//        })
+//        card_profile.addView(profileBinding.root)
+
+        userViewModel.getUserInfo()
+//        profileViewModel.getProfile()
     }
+}
+
+fun  <T> LiveData<T>.reObserve(owner: LifecycleOwner, observer: Observer<T>) {
+    removeObserver(observer)
+    observe(owner, observer)
 }

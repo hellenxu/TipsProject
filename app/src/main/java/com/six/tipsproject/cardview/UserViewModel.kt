@@ -8,12 +8,18 @@ import android.arch.lifecycle.ViewModel
  * @CopyRight six.ca
  * Created by Heavens on 2018-08-16.
  */
-class UserViewModel: ViewModel() {
+class UserViewModel : ViewModel() {
     private val userData = MutableLiveData<User>()
 
     fun getUserInfo() {
-        val user = User("test00", "50")
-        userData.postValue(user)
+
+        val thread = Thread(Runnable {
+            Thread.sleep(5000)
+            val user = User("test00", "50")
+            userData.postValue(user)
+        })
+
+        thread.start()
     }
 
     fun getUserData(): LiveData<User> {
