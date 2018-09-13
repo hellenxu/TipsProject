@@ -31,7 +31,7 @@ class CardFragment: Fragment() {
         userViewModel = ViewModelProviders.of(CardFragment@ this).get(UserViewModel::class.java)
 
         userObserver = Observer {
-            println("xxl-user-onchanged00")
+            println("xxl-user-onchanged00$userObserver")
             userBinding.user = it
             userBinding.setLifecycleOwner(CardFragment@this)
             println("xxl-user-onchanged11")
@@ -40,7 +40,7 @@ class CardFragment: Fragment() {
         card_user.removeAllViews()
         card_profile.removeAllViews()
 
-        userViewModel.getUserData().reObserve(CarMainActivity@this, userObserver)
+        userViewModel.getUserData().observe(CarMainActivity@this, userObserver)
         card_user.addView(userBinding.root)
     }
 
@@ -48,6 +48,11 @@ class CardFragment: Fragment() {
         super.onResume()
         println("xxl-onResume00")
         userViewModel.getUserInfo()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        println("xxl-onStart00")
     }
 
     override fun getUserVisibleHint(): Boolean {

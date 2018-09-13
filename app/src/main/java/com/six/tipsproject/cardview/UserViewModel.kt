@@ -11,6 +11,7 @@ import android.arch.lifecycle.ViewModel
 class UserViewModel : ViewModel() {
     private val userData = MutableLiveData<User>()
     private var user: User? = null
+    private var oldUser: User? = null
 
     init {
         if (user == null) {
@@ -22,7 +23,10 @@ class UserViewModel : ViewModel() {
 
         val thread = Thread(Runnable {
             Thread.sleep(5000)
-            userData.postValue(user)
+            if(!user?.equals(oldUser)!!) {
+                oldUser = user
+                userData.postValue(user)
+            }
         })
 
         thread.start()
