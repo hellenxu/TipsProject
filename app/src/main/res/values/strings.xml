@@ -34,4 +34,5 @@
     <string name="xm">xm</string>
 
     <string name="duration">%s min</string>
+    <string name="lifecycle">Lifecycle</string>
 </resources>

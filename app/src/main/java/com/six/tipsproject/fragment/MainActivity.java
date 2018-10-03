@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.label_frag_one).setOnClickListener(this);
         findViewById(R.id.label_frag_two).setOnClickListener(this);
         findViewById(R.id.label_frag_three).setOnClickListener(this);
+        findViewById(R.id.label_frag_lifecycle).setOnClickListener(this);
 
         fragmentManager = getSupportFragmentManager();
 

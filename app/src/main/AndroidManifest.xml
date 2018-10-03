@@ -19,14 +19,15 @@
             android:name="APP_TAG"
             android:value="${APP_TAG}" />
 
-        <activity android:name=".cardview.CarMainActivity">
+
+        <activity android:name=".fragment.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".fragment.MainActivity" />
+        <activity android:name=".cardview.CarMainActivity"/>
 
         <activity android:name=".strings.StringsActivity" />
 
