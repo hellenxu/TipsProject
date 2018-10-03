@@ -1,9 +1,9 @@
 package com.six.tipsproject.fragment;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.six.tipsproject.R;
@@ -13,7 +13,7 @@ import com.six.tipsproject.R;
  * Created by Xiaolin on 2016-11-28.
  */
 
-public class MainActivity extends Activity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private FragmentManager fragmentManager;
 
     @Override
@@ -25,7 +25,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         findViewById(R.id.label_frag_two).setOnClickListener(this);
         findViewById(R.id.label_frag_three).setOnClickListener(this);
 
-        fragmentManager = getFragmentManager();
+        fragmentManager = getSupportFragmentManager();
 
         if(savedInstanceState == null){
             fragmentManager
@@ -65,6 +65,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
                         .addToBackStack("tagThree")
                         .commit();
                 currentTab = "tagThree";
+                break;
+            case R.id.label_frag_lifecycle:
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.flay_content, new LifecycleFragment())
+                        .addToBackStack("tagFour")
+                        .commit();
                 break;
         }
     }
