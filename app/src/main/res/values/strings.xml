@@ -35,4 +35,5 @@
 
     <string name="duration">%s min</string>
     <string name="lifecycle">Lifecycle</string>
+    <string name="txt_double_click">Double Click</string>
 </resources>
