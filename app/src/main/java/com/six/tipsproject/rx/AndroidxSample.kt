@@ -5,12 +5,14 @@ import android.os.Bundle
 import com.jakewharton.rxbinding2.view.RxView
 import com.six.tipsproject.R
 import io.reactivex.Observable
+import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.act_rx.*
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
@@ -30,6 +32,8 @@ class AndroidxSample: Activity() {
         accessMultiApi()
 
         accessMultiApiZip()
+
+        compose()
     }
 
     private fun initViews() {
@@ -101,6 +105,35 @@ class AndroidxSample: Activity() {
         tvTitle.text = result[0]
         tvBody.text = result[1]
         tvFooter.text = result[2]
+    }
+
+// If there are multiple Disposable subscribeOn and observeOn the same type of Schedulers,
+// then we can use custom ObservableTransformer and compose operator to avoid boilerplate codes
+    private fun compose() {
+        val data = arrayOf("te0", "te1", " ", "te3")
+        Observable.fromArray(data)
+                .map {
+                    val list = ArrayList<String>()
+                    it.forEach {
+                        list.add(it)
+                    }
+
+                    list
+                }
+                .compose(applySchedulers())
+                .subscribe {
+                    it.forEach {item ->
+                        println("xxl-after: $item")
+                    }
+                }
+                .disposedBy(compositeDisposable)
+    }
+
+    private fun <T> applySchedulers(): ObservableTransformer<T, T> {
+        return ObservableTransformer { observable ->
+            observable.subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+        }
     }
 }
 
