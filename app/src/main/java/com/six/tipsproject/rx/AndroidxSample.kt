@@ -2,7 +2,9 @@ package com.six.tipsproject.rx
 
 import android.app.Activity
 import android.os.Bundle
+import android.widget.Toast
 import com.jakewharton.rxbinding2.view.RxView
+import com.jakewharton.rxbinding2.widget.RxTextView
 import com.six.tipsproject.R
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
@@ -34,6 +36,8 @@ class AndroidxSample: Activity() {
         accessMultiApiZip()
 
         compose()
+
+        rxTextView()
     }
 
     private fun initViews() {
@@ -134,6 +138,18 @@ class AndroidxSample: Activity() {
             observable.subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
         }
+    }
+
+    private fun rxTextView() {
+        RxTextView.textChanges(etSearch)
+                .filter {
+                    it.length > 6
+                }
+                .subscribe {
+                    println("xxl-input: $it")
+                    etSearch.setError("max length is 6", getDrawable(android.R.drawable.stat_notify_error))
+                }
+                .disposedBy(compositeDisposable)
     }
 }
 
