@@ -41,6 +41,8 @@ class AndroidxSample: Activity() {
         rxTextView()
 
         combineLatest()
+
+        timeOut()
     }
 
     private fun initViews() {
@@ -168,6 +170,20 @@ class AndroidxSample: Activity() {
                     println("xxl-isEnabled: $it")
                     btnConfirm.isEnabled = it
                 }
+                .disposedBy(compositeDisposable)
+    }
+
+    private fun timeOut() {
+        Observable.create<String> {
+            it.onNext("xxl-timeout-teee00")
+            Thread.sleep(5000)
+            it.onComplete()
+        }.timeout(3, TimeUnit.SECONDS, Observable.create {
+            println("xxl-timeout")
+            it.onError(Exception("test"))
+        }).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ println("xxl-timeout-onNext: $it")}, { println("xxl-timeout-onError: $it")}, { println("xxl-timeout-onComplete")})
                 .disposedBy(compositeDisposable)
     }
 }
