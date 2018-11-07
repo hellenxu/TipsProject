@@ -11,6 +11,7 @@ import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.act_rx.*
@@ -38,6 +39,8 @@ class AndroidxSample: Activity() {
         compose()
 
         rxTextView()
+
+        combineLatest()
     }
 
     private fun initViews() {
@@ -148,6 +151,22 @@ class AndroidxSample: Activity() {
                 .subscribe {
                     println("xxl-input: $it")
                     etSearch.setError("max length is 6", getDrawable(android.R.drawable.stat_notify_error))
+                }
+                .disposedBy(compositeDisposable)
+    }
+
+    private fun combineLatest() {
+        val etNameObservable = RxTextView.textChanges(etName)
+                .map { it.toString() }
+        val etNumberObservable = RxTextView.textChanges(etNumber)
+                .map { it.toString() }
+
+        Observable.combineLatest(etNameObservable, etNumberObservable, BiFunction<String, String, Boolean> { t1, t2 ->
+            t1.isNotEmpty() and t2.isNotEmpty()
+        })
+                .subscribe {
+                    println("xxl-isEnabled: $it")
+                    btnConfirm.isEnabled = it
                 }
                 .disposedBy(compositeDisposable)
     }
