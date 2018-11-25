@@ -9,6 +9,6 @@ import android.arch.persistence.room.PrimaryKey
  * Created by Heavens on 2018-11-21.
  */
 @Entity(tableName = "user")
-data class User(@PrimaryKey(autoGenerate = true) @ColumnInfo(name = "uid") val uid: Int,
+data class User(@PrimaryKey(autoGenerate = true) @ColumnInfo(name = "uid") val uid: Long,
                 @ColumnInfo(name = "first_name") val firstName: String,
                 @ColumnInfo(name = "last_name") val lastName: String)

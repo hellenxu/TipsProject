@@ -12,7 +12,7 @@ interface UserDao {
     fun getUserList(): List<User>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(newUser: User): Int
+    fun insertUser(newUser: User): Long
 
     @Update
     fun updateUser(user: User): Int
