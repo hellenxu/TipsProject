@@ -36,4 +36,8 @@
     <string name="duration">%s min</string>
     <string name="lifecycle">Lifecycle</string>
     <string name="txt_double_click">Double Click</string>
+    <string name="txt_query">Query</string>
+    <string name="txt_insert">Insert</string>
+    <string name="txt_update">update</string>
+    <string name="txt_delete">Delete</string>
 </resources>
