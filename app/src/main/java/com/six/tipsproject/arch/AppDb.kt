@@ -9,7 +9,7 @@ import android.arch.persistence.room.migration.Migration
  * @CopyRight six.ca
  * Created by Heavens on 2018-11-21.
  */
-@Database(entities = [User::class], version = 1)
+@Database(entities = [User::class], version = 2)
 abstract class AppDb: RoomDatabase() {
     companion object {
         val MIGRATION_1_2 = object: Migration(1, 2) {

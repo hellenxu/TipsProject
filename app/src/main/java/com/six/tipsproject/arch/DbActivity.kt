@@ -26,6 +26,7 @@ class DbActivity : Activity(), View.OnClickListener {
         setContentView(R.layout.act_db)
 
         val db = Room.databaseBuilder(applicationContext, AppDb::class.java, "helloRoom")
+                .addMigrations(AppDb.MIGRATION_1_2)
                 .build()
         userDao = db.getUserDao()
 
