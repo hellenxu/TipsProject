@@ -35,20 +35,15 @@ class DbActivity : Activity(), View.OnClickListener {
         btnDelete.setOnClickListener(this)
     }
 
-    //TODO
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnQuery -> getUserList()
 
-            R.id.btnInsert -> {
-                insertUser()
-            }
+            R.id.btnInsert -> insertUser()
 
-            R.id.btnDelete -> {
-            }
+            R.id.btnDelete -> deleteUser()
 
-            R.id.btnUpdate -> {
-            }
+            R.id.btnUpdate -> updateUser()
 
         }
     }
@@ -82,6 +77,33 @@ class DbActivity : Activity(), View.OnClickListener {
                     val sb = StringBuilder("inserted user index: $it")
                     tvResult.text = sb.toString()
                 }, { println("xxl-insert-user-error:$it") })
+                .disposedBy(compositeDisposable)
+    }
+
+    private fun deleteUser() {
+        Maybe.create<Int> {
+            val user = userDao.getUserList()[0]
+            it.onSuccess(userDao.deleteUser(user))
+        }.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    val sb = StringBuilder("delete user index: $it")
+                    tvResult.text = sb.toString()
+                }, { println("xxl-delete-user-error:$it") })
+                .disposedBy(compositeDisposable)
+    }
+
+    private fun updateUser() {
+        Maybe.create<Int> {
+            val user = userDao.getUserList()[0]
+            val newUser = User(user.uid, "updated: ${user.firstName}", user.lastName)
+            it.onSuccess(userDao.updateUser(newUser))
+        }.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    val sb = StringBuilder("updated user index: $it")
+                    tvResult.text = sb.toString()
+                }, { println("xxl-update-user-error:$it") })
                 .disposedBy(compositeDisposable)
     }
 
