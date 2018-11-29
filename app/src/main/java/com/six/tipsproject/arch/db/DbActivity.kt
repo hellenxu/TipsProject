@@ -1,4 +1,4 @@
-package com.six.tipsproject.arch
+package com.six.tipsproject.arch.db
 
 import android.app.Activity
 import android.arch.persistence.room.Room
