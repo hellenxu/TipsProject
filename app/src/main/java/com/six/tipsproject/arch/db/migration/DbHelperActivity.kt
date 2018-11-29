@@ -6,12 +6,14 @@ import android.os.Bundle
 import android.view.View
 import com.fstyle.library.helper.AssetSQLiteOpenHelperFactory
 import com.six.tipsproject.R
+import com.six.tipsproject.arch.db.migration.AppDb.Companion.MIGRATION_2_3
 import com.six.tipsproject.rx.disposedBy
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.act_db.*
+import java.io.*
 import java.util.*
 
 /**
@@ -22,16 +24,15 @@ class DbHelperActivity : Activity(), View.OnClickListener {
     private lateinit var userDao: UserDao
     private val compositeDisposable = CompositeDisposable()
     private val random = Random()
+    private val dbName = "test.db"
+    private var isInitialized = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.act_db)
 
-        val db = Room.databaseBuilder(applicationContext, AppDb::class.java, "test.db")
-                .openHelperFactory(AssetSQLiteOpenHelperFactory())
-                .build()
-        userDao = db.getUserDao()
+        initDb()
 
         btnQuery.setOnClickListener(this)
         btnInsert.setOnClickListener(this)
@@ -39,7 +40,50 @@ class DbHelperActivity : Activity(), View.OnClickListener {
         btnDelete.setOnClickListener(this)
     }
 
+    private fun initDb() {
+
+        Maybe.create<UserDao> {
+            copyDb()
+
+            val db = Room.databaseBuilder(applicationContext, AppDb::class.java, dbName)
+//                    .openHelperFactory(AssetSQLiteOpenHelperFactory())
+                    .addMigrations(MIGRATION_2_3)
+                    .build()
+            it.onSuccess(db.getUserDao())
+
+        }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe ({
+                    userDao = it
+                    isInitialized = true
+                }, { println("xxl-db-error: $it")})
+                .disposedBy(compositeDisposable)
+
+    }
+
+    private fun copyDb() {
+        val dbPath = applicationContext.getDatabasePath(dbName)
+
+        val target = File(dbPath.path)
+        val inputStream = applicationContext.assets.open("databases/$dbName")
+        val outputStream = FileOutputStream(target)
+        val buffer = ByteArray(8192)
+        var length = inputStream.read(buffer, 0, 8192)
+        while(length > 0) {
+            outputStream.write(buffer, 0, length)
+            length = inputStream.read(buffer, 0, 8192)
+        }
+
+        outputStream.flush()
+        outputStream.close()
+        inputStream.close()
+    }
+
     override fun onClick(v: View?) {
+        if(!isInitialized) {
+            return
+        }
+
         when (v?.id) {
             R.id.btnQuery -> getUserList()
 
