@@ -73,7 +73,7 @@ class DbHelperActivity : Activity(), View.OnClickListener {
 
         Maybe.create<Long> {
             val id = System.currentTimeMillis()
-            val user = User(id, "test$id", random.nextInt())
+            val user = User(id.toInt(), "test$id", random.nextInt())
             it.onSuccess(userDao.insertUser(user))
         }.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
