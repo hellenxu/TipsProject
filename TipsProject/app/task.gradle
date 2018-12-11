@@ -1,0 +1,52 @@
+//extract hardcoded text from layout files
+//task ExtractFromXml {
+//    def target = new File("${project.projectDir}/src/main/res/layout")
+//    target.eachFile {
+//        if (it.name.equals('act_details.xml')) {
+//            def content = ''
+//            it.eachLine { line ->
+//                if (line.contains('tools:text=') && !line.contains('@string')) {
+//                    content += line.replace('tools:text', 'app:text') + System.lineSeparator()
+//                } else {
+//                    content += line + System.lineSeparator()
+//                }
+//            }
+//            it.write(content)
+//        }
+//    }
+//}
+
+task ExtractFromXmlFurther {
+//    from ("${project.projectDir}/src/main/res/layout"){
+//    }
+
+//    filter{ line ->
+//        line.replace('tools:text', 'app:text')
+//    }
+
+//    into ("${project.projectDir}/src/main/res/layout2")
+    def target = new File("${project.projectDir}/src/main/res/layout")
+    target.traverse {
+        if (it.name.equals('act_details.xml')) {
+
+            it.filterLine { line ->
+                line.replace('tools:text', 'app:text')
+            }
+        }
+    }
+}
+
+//extract hardcoded strings from Java files
+task ExtractFromJave {
+    def target = new File("${project.projectDir}/src/main/java")
+    target.traverse {
+        println it.name
+        if(it.isFile() && it.name.equals('SixBroadcastReceiver.java')){
+            it.filterLine { line ->
+                println(line)
+            }
+        }else {
+//            println('found nothing')
+        }
+    }
+}

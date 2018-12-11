@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<string name="buy_kindle">I want to buy %s Kindle.</string>-->
+    <plurals name="buy_kindle">
+        <item quantity="zero">I do not want a Kindle.</item>
+        <item quantity="one">I want to buy a Kindle.</item>
+        <item quantity="other">I want to buy %d Kindles.</item>
+    </plurals>
+
+</resources>
