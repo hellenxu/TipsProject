@@ -1,2 +1,0 @@
-# TipsProject
-for everyday study
