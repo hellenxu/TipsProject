@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.frag_issue_sv_onetwo.*
 import six.ca.droiddailyproject.R
 
 /**
@@ -21,6 +20,6 @@ class FragmentOneTwo: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val fragment = FragmentOneTwoThree()
-        childFragmentManager.beginTransaction().replace(R.id.anotherContainer, fragment).commit()
+        childFragmentManager.beginTransaction().replace(R.id.yoxiContainer, fragment).commit()
     }
 }
