@@ -1,0 +1,114 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "six.ca.droiddailyproject"
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders = [APP_TAG: 'release']
+        buildConfigField "String", "EMAIL", "\"release@six.ca\""
+        resValue "string", "res_sample", "hello world"
+        resConfigs "en"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+////    flavorDimensions Sample
+//    flavorDimensions "prod","isLogo"
+//
+//    productFlavors{
+//        google {
+//            dimension "prod"
+////            manifestPlaceholders = [APP_TAG: 'google']
+//        }
+//        anzhi {
+//            dimension "prod"
+////            manifestPlaceholders = [APP_TAG: 'anzhi']
+//        }
+//
+//        xm {
+//            dimension "prod"
+//        }
+//
+//        need {
+//            dimension "isLogo"
+//        }
+//
+//        noneed {
+//            dimension "isLogo"
+//        }
+//    }
+
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        println(names)
+        if(!names.contains("xm")&& names.contains("noneed")){
+            variant.ignore = true
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation rootProject.ext.dependencies["appcompat-v7"]
+    implementation 'ca.six.util:LogUtil:1.0.1'
+    implementation 'de.greenrobot:eventbus:2.4.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'ca.six.util:Permisssion6:1.0.1'
+    //Testing dependencies
+    testImplementation rootProject.ext.dependencies["junit"]
+    testImplementation 'org.mockito:mockito-core:2.7.6'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.robolectric:robolectric:3.4.2'
+    //leakcanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    //PowerMock
+    testImplementation 'org.powermock:powermock-module-junit4:1.6.5'
+    testImplementation 'org.powermock:powermock-module-junit4-rule:1.6.5'
+    testImplementation 'org.powermock:powermock-api-mockito:1.6.5'
+    testImplementation 'org.powermock:powermock-classloading-xstream:1.6.5'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    kapt "android.arch.persistence.room:compiler:1.1.1"
+    implementation 'android.arch.persistence.room:testing:1.1.1'
+    implementation project(':sixlib')
+
+    //rx
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
+
+    implementation 'com.github.daolq3012:AssetSQLiteOpenHelper:V1.0.1'
+}
