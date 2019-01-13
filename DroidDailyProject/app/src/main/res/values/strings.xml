@@ -50,5 +50,11 @@
     <string name="txt_insert">Insert</string>
     <string name="txt_update">update</string>
     <string name="txt_delete">Delete</string>
+    <string name="txt_one">OneOne</string>
+    <string name="txt_12">OneTwo</string>
+    <string name="txt_13">OneThree</string>
+    <string name="txt_frag_123">Fragment123</string>
+    <string name="txt_final_title_summ">Final Title - Summ</string>
+    <string name="txt_test_button">Test Button</string>
 
 </resources>

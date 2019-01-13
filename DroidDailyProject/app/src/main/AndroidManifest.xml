@@ -21,14 +21,16 @@
                 android:name="APP_TAG"
                 android:value="${APP_TAG}"/>
 
-        <activity android:name=".arch.db.DbActivity"/>
-
-        <activity android:name=".arch.db.migration.DbHelperActivity">
+        <activity android:name=".issues.scrollview.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".arch.db.DbActivity"/>
+
+        <activity android:name=".arch.db.migration.DbHelperActivity" />
 
         <activity android:name=".rx.AndroidxSample"/>
 
