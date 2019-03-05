@@ -21,7 +21,9 @@
                 android:name="APP_TAG"
                 android:value="${APP_TAG}"/>
 
-        <activity android:name=".issues.scrollview.HomeActivity">
+        <activity android:name=".issues.scrollview.HomeActivity" />
+
+        <activity android:name=".drawable.ColorFilterSample">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

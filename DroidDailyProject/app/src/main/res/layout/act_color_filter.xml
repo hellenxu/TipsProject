@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ImageView
+            android:id="@+id/iconClear"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_user"/>
+
+    <ImageView
+            android:id="@+id/iconSrc"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_user"/>
+
+    <ImageView
+            android:id="@+id/iconSrcIn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_user"/>
+
+    <ImageView
+            android:id="@+id/iconSrcOut"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_user"/>
+    <ImageView
+            android:id="@+id/iconSrcAtop"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_user"/>
+
+    <ImageView
+            android:id="@+id/iconSrcOver"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_user"/>
+
+    <ImageView
+            android:id="@+id/iconDst"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_user"/>
+
+    <ImageView
+            android:id="@+id/iconDstIn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_user"/>
+
+    <ImageView
+            android:id="@+id/iconDstOut"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_user"/>
+
+    <ImageView
+            android:id="@+id/iconDstAtop"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_user"/>
+
+
+    <ImageView
+            android:id="@+id/iconDstOver"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_user"/>
+
+</LinearLayout>
