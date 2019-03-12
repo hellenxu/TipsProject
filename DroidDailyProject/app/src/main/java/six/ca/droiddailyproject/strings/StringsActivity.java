@@ -6,13 +6,17 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ClickableSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import six.ca.droiddailyproject.BuildConfig;
 import six.ca.droiddailyproject.R;
 import six.ca.droiddailyproject.log.CommonLogger;
@@ -77,6 +81,21 @@ public class StringsActivity extends Activity {
         }
 
         ((TextView)findViewById(R.id.hours)).setText(formattedString.toString());
+
+        clickableTextInit();
+    }
+
+    private void clickableTextInit() {
+        TextView text = findViewById(R.id.clickableText);
+        SpannableString spannableStr = new SpannableString(text.getText());
+        spannableStr.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                Toast.makeText(StringsActivity.this, "click me", Toast.LENGTH_SHORT).show();
+            }
+        }, 5, 12, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        text.setText(spannableStr);
+        text.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public void showProgressDialog(View view) {

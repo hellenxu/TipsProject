@@ -23,8 +23,10 @@
 
         <activity android:name=".issues.scrollview.HomeActivity" />
 
-        <activity android:name=".drawable.ColorFilterSample">
-            <intent-filter>
+        <activity android:name=".drawable.ColorFilterSample" />
+
+        <activity android:name=".strings.StringsActivity">
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
@@ -39,8 +41,6 @@
         <activity android:name=".fragment.MainActivity"/>
 
         <activity android:name=".cardview.CarMainActivity"/>
-
-        <activity android:name=".strings.StringsActivity"/>
 
         <activity android:name=".broadcast.BroadcastDemo"/>
 

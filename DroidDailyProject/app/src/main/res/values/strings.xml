@@ -57,4 +57,6 @@
     <string name="txt_final_title_summ">Final Title - Summ</string>
     <string name="txt_test_button">Test Button</string>
 
+    <string name="txt_clickable">ewou-<font color="#097">Click me</font>-oauronwo2u3</string>
+
 </resources>
