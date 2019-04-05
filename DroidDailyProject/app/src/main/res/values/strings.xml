@@ -59,4 +59,8 @@
 
     <string name="txt_clickable">ewou-<font color="#097">Click me</font>-oauronwo2u3</string>
 
+    <string name="txt_no_accessibility">Accessibility Important auto</string>
+
+    <string name="txt_accessibility">Accessibility Important yes</string>
+
 </resources>
