@@ -11,6 +11,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function3
+import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.act_rx.*
 import six.ca.droiddailyproject.R
@@ -29,6 +30,8 @@ class AndroidxSample: Activity() {
 
         setContentView(R.layout.act_rx)
 
+        setErrorHandler()
+
         initViews()
 
         accessMultiApi()
@@ -42,6 +45,13 @@ class AndroidxSample: Activity() {
         combineLatest()
 
         timeOut()
+    }
+
+    private fun setErrorHandler() {
+        RxJavaPlugins.setErrorHandler {
+            //do something about the error
+            println("xxl-error: ${it.message}")
+        }
     }
 
     private fun initViews() {
