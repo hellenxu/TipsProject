@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register Form</title>
+    <!--<script language="JavaScript" src="./check.js"></script>-->
+
+    <script type="text/javascript">
+
+    function checkreg() {
+	    var inputName = document.getElementById('User').value;
+	    if (inputName === '') {
+	        alert('Username should not be empty');
+	        return false
+	    }
+    }
+
+
+    </script>
+</head>
+<body>
+<form name="form1" onsubmit="return checkreg()" method="post" action="./success.html">
+    <table width="372" height="89" border="1" cellpadding="1" cellspacing="0" bordercolor="#0000FF" align="center">
+        <tr>
+            <td width="127" height="32">Username:</td>
+            <td width="122"><label>
+                <input type="text" name="username" id="User"/>
+            </label>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" name="Submit" value="Submit">
+                <input type="reset" name="Reset" value="Reset"/>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

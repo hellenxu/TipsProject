@@ -27,7 +27,9 @@
 
         <activity android:name=".strings.StringsActivity" />
 
-        <activity android:name=".accessibility.AccessibilityExample">
+        <activity android:name=".accessibility.AccessibilityExample" />
+
+        <activity android:name=".webview.WebViewSample">
         <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
