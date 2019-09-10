@@ -1,14 +1,14 @@
 package six.ca.droiddailyproject.webview
 
 import android.content.Context
+import android.graphics.Rect
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.DisplayMetrics
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
-import android.widget.LinearLayout
 import android.widget.ScrollView
-import kotlinx.android.synthetic.main.frag_wv.*
 import six.ca.droiddailyproject.R
 
 /**
@@ -17,65 +17,63 @@ import six.ca.droiddailyproject.R
  * Copyright 2019 Six. All rights reserved.
  */
 class FragmentWebView: Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
-    private var contentView: View? = null
-    private var preHeight = 0
-    private var originalHeight = 0
-    private var keyboardHeight = 0
+    private lateinit var webView: WebView
+    private lateinit var scrollView: ScrollView
+    private var clickY = 0
+    private var clickX = 0
+    private lateinit var inputMethodManager: InputMethodManager
 
     override fun onGlobalLayout() {
-        val currentHeight = contentView?.height?:0
-        if (currentHeight == 0 )
-            return
+        println("xxl-onGlobalLayout00")
+        val dm = DisplayMetrics()
+        val windowManager = context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        windowManager.defaultDisplay.getMetrics(dm)
+        val screenHeight = dm.heightPixels
 
-        var hasChange = false
-        if (preHeight == 0) {
-            preHeight = currentHeight
-            originalHeight = currentHeight
-        } else {
-            if (preHeight != currentHeight) {
-                hasChange = true
-                preHeight = currentHeight
-            } else {
-                hasChange = false
-            }
-        }
+        val visibleRect = Rect()
+        activity?.window?.decorView?.getWindowVisibleDisplayFrame(visibleRect)
+        val visibleHeight = visibleRect.bottom - visibleRect.top
 
-        if (hasChange) {
-            keyboardHeight = originalHeight - currentHeight
+        val heightOffset = screenHeight - visibleHeight
+        if (heightOffset > 0.2 * screenHeight
+            && inputMethodManager.isActive
+            && !inVisibleRect(visibleRect, clickX, clickY)) {
+            // move extra 60 pixels upwards to make sure the whole view is visible
+            scrollView.smoothScrollBy(0, clickY - visibleRect.bottom + 60)
         }
     }
 
-    private lateinit var webView: WebView
+    private fun inVisibleRect(rect: Rect, x: Int, y: Int): Boolean {
+        return rect.contains(x, y) && y > rect.bottom
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.frag_wv, container, false)
         webView = rootView.findViewById(R.id.web)
         webView.loadUrl("file:///android_asset/register.html")
-        val paddingView = rootView.findViewById<View>(R.id.paddingView)
-        val scrollView = rootView.findViewById<ScrollView>(R.id.sv)
+        scrollView = rootView.findViewById(R.id.sv)
 
-        val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        var layoutParams: LinearLayout.LayoutParams
-
-        webView.isScrollContainer = false
         webView.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP && inputMethodManager.isActive) {
-//                layoutParams = LinearLayout.LayoutParams(-1, 0)
-                scrollView.smoothScrollTo(event.rawX.toInt(), event.rawY.toInt())
                 println("xxl-event: x=${event.rawX}; y=${event.rawY}")
-                println("xxl-keyboardHeight: $keyboardHeight")
-            } else {
-//                layoutParams = LinearLayout.LayoutParams(-1, 0)
+                clickY = event.rawY.toInt()
+                println("xxl-clickY: $clickY")
             }
-//            paddingView.layoutParams = layoutParams
             return@setOnTouchListener false
         }
+
+        inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
         return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        contentView = activity?.findViewById(R.id.content)
+        activity?.window?.decorView?.viewTreeObserver?.addOnGlobalLayoutListener(this)
+    }
+
+    override fun onDestroyView() {
+        activity?.window?.decorView?.viewTreeObserver?.removeOnGlobalLayoutListener(this)
+        super.onDestroyView()
     }
 }

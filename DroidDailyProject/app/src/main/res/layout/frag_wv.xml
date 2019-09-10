@@ -19,10 +19,5 @@
                 android:layout_height="wrap_content"
                 android:text="@string/txt_test_button" />
 
-        <View
-                android:id="@+id/paddingView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="vertical"/>
     </LinearLayout>
 </ScrollView>
