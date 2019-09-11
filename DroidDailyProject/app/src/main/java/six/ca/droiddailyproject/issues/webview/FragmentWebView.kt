@@ -1,4 +1,4 @@
-package six.ca.droiddailyproject.webview
+package six.ca.droiddailyproject.issues.webview
 
 import android.content.Context
 import android.graphics.Rect
