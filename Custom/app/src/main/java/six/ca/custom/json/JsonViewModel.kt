@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
  * Copyright 2019 Six. All rights reserved.
  */
 class JsonViewModel: ViewModel() {
-    private val _favNumSet = MutableLiveData<List<FavResponse>>()
-    val favNumSet: LiveData<List<FavResponse>>
+    private val _favNumSet = MutableLiveData<Array<FavResponse>>()
+    val favNumSet: LiveData<Array<FavResponse>>
         get() = _favNumSet
     private val serviceApi = NetClient.getInstance().create(FavApi::class.java)
 
@@ -24,7 +24,7 @@ class JsonViewModel: ViewModel() {
             if (result.isNotEmpty()) {
                 _favNumSet.postValue(result)
             } else {
-                _favNumSet.postValue(emptyList())
+                _favNumSet.postValue(emptyArray())
             }
         }
     }

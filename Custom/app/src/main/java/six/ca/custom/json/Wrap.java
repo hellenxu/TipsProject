@@ -4,6 +4,8 @@ import androidx.core.util.Pair;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.JsonQualifier;
+import com.squareup.moshi.Types;
+import com.squareup.moshi.internal.Util;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -12,6 +14,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.lang.reflect.GenericArrayType;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -40,8 +43,15 @@ public @interface Wrap {
         if (nextAnnotations == null) {
             return null;
         }
+        JsonAdapter<Object> adapter;
 
-        JsonAdapter<Object> adapter = moshi.adapter(type, nextAnnotations.second);
+        System.out.println("xxl-type: " + Types.getRawType(type).getComponentType());
+        if (type instanceof GenericArrayType) {
+            adapter = new CustomArrayJsonAdapter(type, moshi);
+        } else {
+            adapter = moshi.adapter(type, nextAnnotations.second);
+        }
+
         Wrap wrapped = nextAnnotations.first;
         return new WrapJsonAdapter<>(adapter, wrapped.path(), wrapped.failOnNotFound());
     };

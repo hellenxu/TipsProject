@@ -8,7 +8,8 @@ import retrofit2.http.GET
  * Copyright 2019 Six. All rights reserved.
  */
 interface FavApi {
-    @GET("/v2/5d8faf913200000d00adeccc")
+//    @GET("/v2/5d8faf913200000d00adeccc")
+    @GET("/v2/5d916cbf310000520010c81f")
     @Wrap(path = ["favouriteNumbersResponse", "favouriteNumbers", "faveNumberSetList"])
-    suspend fun fetchFavNums(): List<FavResponse>
+    suspend fun fetchFavNums(): Array<FavResponse>
 }
