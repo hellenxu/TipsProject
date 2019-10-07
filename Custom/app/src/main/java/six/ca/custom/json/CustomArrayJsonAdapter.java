@@ -4,12 +4,14 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.JsonDataException;
 import com.squareup.moshi.JsonReader;
 import com.squareup.moshi.JsonWriter;
+import com.squareup.moshi.Moshi;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,49 +22,56 @@ import java.util.List;
 public class CustomArrayJsonAdapter<T> extends JsonAdapter<T[]> {
     private Class<T> clazz;
     private JsonAdapter<T> adapter;
+    private Moshi moshi;
 
-    public CustomArrayJsonAdapter(JsonAdapter<T> adapter, Class<T> clazz) {
+    public CustomArrayJsonAdapter(Moshi moshi, Class<T> clazz) {
         this.clazz = clazz;
-        this.adapter = adapter;
+        this.adapter = moshi.adapter(clazz);
+        this.moshi = moshi;
     }
 
     @Override
     public T[] fromJson(@NotNull JsonReader reader) throws IOException {
         switch (reader.peek()) {
             case BEGIN_ARRAY:
-                return readArray(reader);
+                return (T[]) readArray(reader, clazz);
             case BEGIN_OBJECT:
-                return readObject(reader);
+                return (T[]) readObject(reader, clazz);
             case NULL:
-                return (T[])Array.newInstance(clazz, 0);
+                return (T[]) Array.newInstance(clazz, 0);
             default:
                 throw new JsonDataException();
         }
     }
 
-    private T[] readArray(JsonReader reader) throws IOException {
-        List<T> list = new ArrayList<>();
+    private Object[] readArray(JsonReader reader, Class clazz) throws IOException {
+        List<Object> list = new ArrayList<>();
         reader.beginArray();
         while (reader.hasNext()) {
-            T item = (T) adapter.fromJson(reader);
-            list.add(item);
+            Object[] objectResult = readObject(reader, clazz);
+            list.addAll(Arrays.asList(objectResult));
         }
         reader.endArray();
 
-        return list.toArray((T[])Array.newInstance(clazz, list.size()));
+        Object[] array = (Object[]) Array.newInstance(clazz, list.size());
+        for (int i = 0, size = list.size(); i < size; i++) {
+            Array.set(array, i, list.get(i));
+        }
+
+        return array;
     }
 
-    private T[] readObject(JsonReader reader) throws IOException {
-        List<T> list = new ArrayList<>();
-        T item = adapter.fromJson(reader);
-        list.add(item);
-        return list.toArray((T[])Array.newInstance(clazz, list.size()));
+    private Object[] readObject(JsonReader reader, Class clzz) {
+        if (clzz == FavResponse.class ) {
+            return new FavResponse[]{new FavAdapter(moshi).fromJson(reader)};
+        }
+        return new Object[]{};
     }
 
     @Override
     public void toJson(@NotNull JsonWriter writer, T[] value) throws IOException {
         writer.beginArray();
-        for (int i = 0, size = Array.getLength(value); i < size; i ++) {
+        for (int i = 0, size = Array.getLength(value); i < size; i++) {
             adapter.toJson(writer, (T) Array.get(value, i));
         }
         writer.endArray();

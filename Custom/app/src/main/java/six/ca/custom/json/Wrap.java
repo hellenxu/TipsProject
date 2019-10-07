@@ -47,7 +47,7 @@ public @interface Wrap {
 
         if (type instanceof GenericArrayType) {
             Class clazz = Types.getRawType(type).getComponentType();
-            adapter = new CustomArrayJsonAdapter(moshi.adapter(clazz), clazz);
+            adapter = new CustomArrayJsonAdapter(moshi, clazz);
         } else {
             adapter = moshi.adapter(type, nextAnnotations.second);
         }
