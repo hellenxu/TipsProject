@@ -4,14 +4,11 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.JsonDataException;
 import com.squareup.moshi.JsonReader;
 import com.squareup.moshi.JsonWriter;
-import com.squareup.moshi.Moshi;
-import com.squareup.moshi.Types;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +21,9 @@ public class CustomArrayJsonAdapter<T> extends JsonAdapter<T[]> {
     private Class<T> clazz;
     private JsonAdapter<T> adapter;
 
-    public CustomArrayJsonAdapter(Type type, Moshi moshi) {
-        clazz = (Class<T>) Types.getRawType(type).getComponentType();
-        if (clazz != null) {
-            adapter = moshi.adapter(clazz);
-        }
+    public CustomArrayJsonAdapter(JsonAdapter<T> adapter, Class<T> clazz) {
+        this.clazz = clazz;
+        this.adapter = adapter;
     }
 
     @Override
@@ -59,7 +54,7 @@ public class CustomArrayJsonAdapter<T> extends JsonAdapter<T[]> {
 
     private T[] readObject(JsonReader reader) throws IOException {
         List<T> list = new ArrayList<>();
-        T item = (T) adapter.fromJson(reader);
+        T item = adapter.fromJson(reader);
         list.add(item);
         return list.toArray((T[])Array.newInstance(clazz, list.size()));
     }
