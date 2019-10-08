@@ -1,11 +1,6 @@
 package six.ca.custom.json
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.FromJson
-import com.squareup.moshi.ToJson
-import com.squareup.moshi.JsonReader
-import com.squareup.moshi.JsonWriter
-import com.squareup.moshi.JsonDataException
+import com.squareup.moshi.*
 import java.lang.reflect.Array
 import java.lang.reflect.Array.getLength
 import kotlin.collections.ArrayList
@@ -15,10 +10,48 @@ import kotlin.collections.ArrayList
  * @date 2019-10-07
  * Copyright 2019 Six. All rights reserved.
  */
-class FavAdapter constructor(private val moshi: Moshi) {
+class FavAdapter constructor(private val moshi: Moshi) : JsonAdapter<Any>() {
 
-    @FromJson
-    fun fromJson(reader: JsonReader): FavResponse {
+    override fun fromJson(reader: JsonReader): kotlin.Array<FavResponse> {
+        val list = arrayListOf<FavResponse>()
+        when (reader.peek()) {
+            JsonReader.Token.BEGIN_OBJECT -> {
+                val obj = readObject(reader, FavResponse::class.java) as FavResponse
+                list.add(obj)
+            }
+            JsonReader.Token.BEGIN_ARRAY -> {
+                list.addAll(readArray(reader, FavResponse::class.java))
+            }
+            else -> {
+            }
+        }
+
+        return list.toTypedArray()
+    }
+
+    private fun <T> readArray(reader: JsonReader, clzz: Class<*>): List<T> {
+        val list = ArrayList<T>()
+        reader.beginArray()
+        while (reader.hasNext()) {
+            readObject(reader, clzz)?.let {
+                list.add(it as T)
+            }
+        }
+        reader.endArray()
+
+        return list
+    }
+
+    private fun <T> readObject(reader: JsonReader, clzz: Class<T>): T? {
+        return when (clzz) {
+            PhoneInfo::class.java -> moshi.adapter<T>(clzz).fromJson(reader)
+            else -> {
+                readFavNumList(reader) as T
+            }
+        }
+    }
+
+    private fun readFavNumList(reader: JsonReader): FavResponse {
         reader.beginObject()
         var serviceCd = ""
         var featureCd = ""
@@ -68,55 +101,29 @@ class FavAdapter constructor(private val moshi: Moshi) {
     }
 
     private fun readList(reader: JsonReader): List<PhoneInfo> {
-        val list = ArrayList<PhoneInfo>()
-        when(reader.peek()) {
-            JsonReader.Token.BEGIN_ARRAY -> {
-                list.addAll(readArray(reader))
-            }
-
+        val list = arrayListOf<PhoneInfo>()
+        when (reader.peek()) {
             JsonReader.Token.BEGIN_OBJECT -> {
-                readObject(reader)?.let {
-                    list.add(it)
-                }
+                val obj = readObject(reader, PhoneInfo::class.java) as PhoneInfo
+                list.add(obj)
             }
-
-            JsonReader.Token.NULL -> {
-                list.addAll(emptyList())
+            JsonReader.Token.BEGIN_ARRAY -> {
+                list.addAll(readArray(reader, PhoneInfo::class.java))
             }
-
-            else -> throw JsonDataException()
+            else -> {
+            }
         }
-
         return list
     }
 
-    private fun readArray(reader: JsonReader): List<PhoneInfo> {
-        val list = ArrayList<PhoneInfo>()
-        reader.beginArray()
-        while (reader.hasNext()) {
-            readObject(reader)?.let {
-                list.add(it)
-            }
-        }
-        reader.endArray()
-
-        return list
-    }
-
-    private fun readObject(reader: JsonReader): PhoneInfo? {
-        return moshi.adapter<PhoneInfo>(PhoneInfo::class.java).fromJson(reader)
-    }
-
-    @ToJson
-    fun toJson(writer: JsonWriter, value: Any): String {
+    override fun toJson(writer: JsonWriter, value: Any?) {
         val result = StringBuilder()
         val adapter = moshi.adapter<FavResponse>(FavResponse::class.java)
         writer.beginArray()
         val size = getLength(value)
-        for(i in 0 until size) {
+        for (i in 0 until size) {
             result.append(adapter.toJson(writer, Array.get(value, i) as FavResponse))
         }
         writer.endArray()
-        return result.toString()
     }
 }

@@ -63,7 +63,7 @@ public class CustomArrayJsonAdapter<T> extends JsonAdapter<T[]> {
 
     private Object[] readObject(JsonReader reader, Class clzz) {
         if (clzz == FavResponse.class ) {
-            return new FavResponse[]{new FavAdapter(moshi).fromJson(reader)};
+            return new FavAdapter(moshi).fromJson(reader);
         }
         return new Object[]{};
     }

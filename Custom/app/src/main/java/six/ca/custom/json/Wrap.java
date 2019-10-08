@@ -13,8 +13,6 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.lang.reflect.GenericArrayType;
-import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -45,9 +43,9 @@ public @interface Wrap {
         }
         JsonAdapter<Object> adapter;
 
-        if (type instanceof GenericArrayType) {
-            Class clazz = Types.getRawType(type).getComponentType();
-            adapter = new CustomArrayJsonAdapter(moshi, clazz);
+        Class clazz = Types.getRawType(type).getComponentType();
+        if (clazz != null && CustomAdapterFactory.INSTANCE.needCustomAdapter(clazz)) {
+            adapter = CustomAdapterFactory.INSTANCE.createAdapter(clazz, moshi);
         } else {
             adapter = moshi.adapter(type, nextAnnotations.second);
         }
