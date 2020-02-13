@@ -21,6 +21,13 @@
                 android:name="APP_TAG"
                 android:value="${APP_TAG}"/>
 
+        <activity android:name=".fragment.NestedSampleActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".issues.scrollview.HomeActivity" />
 
         <activity android:name=".drawable.ColorFilterSample" />
@@ -30,9 +37,7 @@
         <activity android:name=".accessibility.AccessibilityExample" />
 
         <activity android:name=".issues.webview.WebViewSample"
-                android:windowSoftInputMode="adjustResize|stateHidden">
-
-        </activity>
+                android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity android:name=".arch.db.DbActivity"/>
 
@@ -40,12 +45,7 @@
 
         <activity android:name=".rx.AndroidxSample"/>
 
-        <activity android:name=".fragment.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+        <activity android:name=".fragment.MainActivity"/>
 
         <activity android:name=".cardview.CarMainActivity"/>
 
