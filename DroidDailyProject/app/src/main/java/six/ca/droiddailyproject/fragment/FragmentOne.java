@@ -45,4 +45,10 @@ public class FragmentOne extends Fragment {
         System.out.println("xxl-frag");
         //do something...
     }
+
+    @Override
+    public void onDestroy() {
+        System.out.println("xxl-FragmentOne-onDestroy");
+        super.onDestroy();
+    }
 }

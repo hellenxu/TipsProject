@@ -31,10 +31,7 @@
 
         <activity android:name=".issues.webview.WebViewSample"
                 android:windowSoftInputMode="adjustResize|stateHidden">
-        <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
 
         <activity android:name=".arch.db.DbActivity"/>
@@ -43,7 +40,12 @@
 
         <activity android:name=".rx.AndroidxSample"/>
 
-        <activity android:name=".fragment.MainActivity"/>
+        <activity android:name=".fragment.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
         <activity android:name=".cardview.CarMainActivity"/>
 

@@ -78,4 +78,16 @@ public class FragmentTwo extends Fragment {
         super.onDestroyView();
         System.out.println("xxl-onDestroyView-Two");
     }
+
+    @Override
+    public void onDestroy() {
+        System.out.println("xxl-onDestroy-Two");
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDetach() {
+        System.out.println("xxl-onDetach-Two");
+        super.onDetach();
+    }
 }

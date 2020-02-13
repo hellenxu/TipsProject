@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(savedInstanceState == null){
             fragmentManager
                     .beginTransaction()
-                    .replace(R.id.flay_content, new FragmentOne())
+                    .replace(R.id.flay_content, new FragmentOne(), "tagOne")
                     .addToBackStack("tagOne")
                     .commit();
             currentTab = "tagOne";
@@ -42,39 +42,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        System.out.println("xxl-findFragmentByTag00: " + fragmentManager.findFragmentByTag("tagOne"));
+        System.out.println("xxl-findFragmentByTag01: " + fragmentManager.findFragmentByTag("tagTwo"));
+
         switch (v.getId()){
             case R.id.label_frag_one:
+                System.out.println("xxl-click: one");
+
                 fragmentManager
                         .beginTransaction()
-                        .replace(R.id.flay_content, new FragmentOne())
+                        .replace(R.id.flay_content, new FragmentOne(), "tagOne")
                         .addToBackStack("tagOne")
                         .commit();
                 currentTab = "tagOne";
                 break;
             case R.id.label_frag_two:
+                System.out.println("xxl-click: two");
+
                 fragmentManager
                         .beginTransaction()
-                        .replace(R.id.flay_content, new FragmentTwo())
+                        .replace(R.id.flay_content, new FragmentTwo(), "tagTwo")
                         .addToBackStack("tagTwo")
                         .commit();
                 currentTab = "tagTwo";
                 break;
             case R.id.label_frag_three:
+
+                System.out.println("xxl-click: three");
+
                 fragmentManager
                         .beginTransaction()
-                        .replace(R.id.flay_content, new FragmentThree())
+                        .replace(R.id.flay_content, new FragmentThree(), "tagThree")
                         .addToBackStack("tagThree")
                         .commit();
                 currentTab = "tagThree";
                 break;
             case R.id.label_frag_lifecycle:
+                System.out.println("xxl-click: lifecycle");
+
                 fragmentManager
                         .beginTransaction()
-                        .replace(R.id.flay_content, new LifecycleFragment())
+                        .replace(R.id.flay_content, new LifecycleFragment(), "tagFour")
                         .addToBackStack("tagFour")
                         .commit();
                 break;
         }
+        System.out.println("xxl-findFragmentByTag11: " + fragmentManager.findFragmentByTag("tagOne"));
+        System.out.println("xxl-findFragmentByTag110: " + fragmentManager.findFragmentByTag("tagTwo"));
+
     }
 
     @Override
