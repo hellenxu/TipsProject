@@ -62,4 +62,19 @@ class LevelOneFragment : Fragment(), View.OnClickListener {
             }
         }
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        println("xxl-frag-onSaveInstanceState: $outState")
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        println("xxl-frag-onViewStateRestored: $savedInstanceState")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        println("xxl-frag-onResume")
+    }
 }

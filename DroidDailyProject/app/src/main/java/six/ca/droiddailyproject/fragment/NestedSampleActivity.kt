@@ -22,4 +22,34 @@ class NestedSampleActivity: AppCompatActivity() {
                 .commit()
         }
     }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        println("xxl-act-onSaveInstanceState: $outState")
+    }
+
+    override fun onResumeFragments() {
+        super.onResumeFragments()
+        println("xxl-act-onResumeFragments")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        println("xxl-act-onResume")
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        println("xxl-act-onRestoreInstanceState")
+    }
 }
+
+/**
+ * launch -> press home:
+ * 2020-02-19 22:31:09.997 32316-32316/six.ca.droiddailyproject I/System.out: xxl-frag-onViewStateRestored: null
+ * 2020-02-19 22:31:10.000 32316-32316/six.ca.droiddailyproject I/System.out: xxl-onResume
+ * 2020-02-19 22:31:10.001 32316-32316/six.ca.droiddailyproject I/System.out: xxl-act-onResumeFragments
+ * 2020-02-19 22:33:30.826 32316-32316/six.ca.droiddailyproject I/System.out: xxl-frag-onSaveInstanceState: Bundle[{}]
+ * 2020-02-19 22:33:30.838 32316-32316/six.ca.droiddailyproject I/System.out: xxl-act-onSaveInstanceState: Bundle[{android:viewHierarchyState=Bundle[{android:views={16908290=android.view.AbsSavedState$1@1352a56, 2131230726=android.support.v7.widget.Toolbar$SavedState@b0d6ad7, 2131230728=android.view.AbsSavedState$1@1352a56, 2131230734=android.view.AbsSavedState$1@1352a56, 2131230791=android.view.AbsSavedState$1@1352a56, 2131230827=android.view.AbsSavedState$1@1352a56}}], android:support:fragments=android.support.v4.app.FragmentManagerState@48e2fc4, android:lastAutofillId=1073741823, android:fragments=android.app.FragmentManagerState@8b03ead}]
+ *
+ */
