@@ -1,6 +1,7 @@
 package six.ca.droiddailyproject.fragment
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import six.ca.droiddailyproject.R
 
@@ -26,6 +27,12 @@ class NestedSampleActivity: AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         println("xxl-act-onSaveInstanceState: $outState")
+    }
+
+    // without setting android:persistableMode, this onSaveInstanceState will not be called
+    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        println("xxl-act-the-other-onSaveInstanceState")
     }
 
     override fun onResumeFragments() {
