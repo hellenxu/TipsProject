@@ -1,5 +1,8 @@
 package six.ca.droiddailyproject.fragment
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 /**
  * @author hellenxu
  * @date 2020-03-01
@@ -14,5 +17,10 @@ class InfoManager private constructor() {
         @JvmStatic val instance: InfoManager by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) { InfoManager() }
     }
 
-    class Info(val userId: String)
+    fun propertyInitialized(): Boolean {
+        return this::sharedInfo.isInitialized
+    }
+
+    @Parcelize
+    class Info(val userId: String): Parcelable
 }

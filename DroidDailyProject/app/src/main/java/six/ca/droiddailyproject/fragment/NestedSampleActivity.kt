@@ -25,6 +25,7 @@ class NestedSampleActivity: AppCompatActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
+//        outState?.putParcelable("info", InfoManager.instance.sharedInfo)
         super.onSaveInstanceState(outState)
         println("xxl-act-onSaveInstanceState: $outState")
     }
@@ -47,6 +48,7 @@ class NestedSampleActivity: AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
+        InfoManager.instance.sharedInfo = savedInstanceState?.getParcelable("info") ?: InfoManager.Info("000")
         println("xxl-act-onRestoreInstanceState")
     }
 }
