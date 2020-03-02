@@ -15,6 +15,12 @@ import six.ca.droiddailyproject.R
  */
 class LevelOneFragment : Fragment(), View.OnClickListener {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        println("xxl-frag-sharedInt: ${InfoManager.instance.sharedInt}")
+        println("xxl-frag-sharedInfo: ${InfoManager.instance.sharedInfo}")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
