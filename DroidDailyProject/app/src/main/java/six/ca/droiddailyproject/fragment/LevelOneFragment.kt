@@ -17,9 +17,10 @@ class LevelOneFragment : Fragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        println("xxl-frag-saved: ${savedInstanceState?.getParcelable<InfoManager.Info>("info")}")
+//        println("xxl-frag-saved: ${savedInstanceState?.getParcelable<InfoManager.Info>("info")}")
         println("xxl-frag-sharedInt: ${InfoManager.instance.sharedInt}")
-        println("xxl-frag-sharedInfo: ${ if (InfoManager.instance.propertyInitialized()) InfoManager.instance.sharedInfo else savedInstanceState?.getParcelable<InfoManager.Info>("info")}")
+        println("xxl-frag-sharedInfo: ${InfoManager.instance.sharedInfo}")
+//        println("xxl-frag-sharedInfo: ${ if (InfoManager.instance.propertyInitialized()) InfoManager.instance.sharedInfo else savedInstanceState?.getParcelable<InfoManager.Info>("info")}")
     }
 
     override fun onCreateView(
@@ -70,11 +71,11 @@ class LevelOneFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putParcelable("info", InfoManager.instance.sharedInfo)
-        super.onSaveInstanceState(outState)
-        println("xxl-frag-onSaveInstanceState: $outState")
-    }
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        outState.putParcelable("info", InfoManager.instance.sharedInfo)
+//        super.onSaveInstanceState(outState)
+//        println("xxl-frag-onSaveInstanceState: $outState")
+//    }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
