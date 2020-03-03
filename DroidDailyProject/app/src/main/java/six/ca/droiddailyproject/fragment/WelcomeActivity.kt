@@ -32,7 +32,15 @@ class WelcomeActivity: AppCompatActivity() {
         tvWelcome.text = "Welcome"
         tvWelcome.textSize = 22f
         tvWelcome.setOnClickListener {
-            startActivity(Intent(this, NestedSampleActivity::class.java))
+            val intent = Intent(this, NestedSampleActivity::class.java)
+                .apply {
+                    val bundle = Bundle()
+                    bundle.putInt("intent-Int", 6)
+                    bundle.putParcelable("intent-Obj", InfoManager.Info("bnvcmjh"))
+                    this.putExtras(bundle)
+                }
+
+            startActivity(intent)
         }
 
         setContentView(tvWelcome)

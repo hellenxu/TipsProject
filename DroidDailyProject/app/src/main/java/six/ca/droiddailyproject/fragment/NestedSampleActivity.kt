@@ -48,6 +48,11 @@ class NestedSampleActivity: AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        val bundle = intent.extras
+        println("xxl-act-intent-Int: ${bundle?.getInt("intent-Int", 0)}")
+        println("xxl-act-intent-Obj: ${(bundle?.getParcelable("intent-Obj") as InfoManager.Info).userId}")
+
         println("xxl-act-onResume")
     }
 
