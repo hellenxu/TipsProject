@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import six.ca.droiddailyproject.R
+import six.ca.droiddailyproject.SixApplication
 
 /**
  * @author hellenxu
@@ -28,6 +29,10 @@ class LevelOneFragment : Fragment(), View.OnClickListener {
 
         println("xxl-frag-bundle-Int: ${arguments?.getInt("fromActInt", 0)}")
         println("xxl-frag-bundle-Obj: ${arguments?.getParcelable<InfoManager.Info>("fromActObj")}")
+
+        println("xxl-frag-application-Int: ${SixApplication.sharedInt}")
+        println("xxl-frag-application-Obj: ${SixApplication.sharedInfo}")
+
     }
 
     override fun onCreateView(

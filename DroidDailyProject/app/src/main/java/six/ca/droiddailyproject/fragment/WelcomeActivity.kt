@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
 import android.widget.TextView
 import six.ca.droiddailyproject.R
+import six.ca.droiddailyproject.SixApplication
 
 /**
  * @author hellenxu
@@ -20,6 +21,8 @@ class WelcomeActivity: AppCompatActivity() {
         InfoManager.instance.sharedInfo = InfoManager.Info("123456")
         StaticInfo.sharedInt = 2
         StaticInfo.sharedInfo = InfoManager.Info("987654")
+        SixApplication.sharedInt = 4
+        SixApplication.sharedInfo = InfoManager.Info("plokju")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
