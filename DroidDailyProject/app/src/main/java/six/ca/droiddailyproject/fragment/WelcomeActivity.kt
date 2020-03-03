@@ -18,6 +18,8 @@ class WelcomeActivity: AppCompatActivity() {
         super.onStart()
         InfoManager.instance.sharedInt = 1
         InfoManager.instance.sharedInfo = InfoManager.Info("123456")
+        StaticInfo.sharedInt = 2
+        StaticInfo.sharedInfo = InfoManager.Info("987654")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
