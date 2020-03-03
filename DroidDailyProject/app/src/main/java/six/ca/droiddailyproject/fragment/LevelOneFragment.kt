@@ -20,9 +20,14 @@ class LevelOneFragment : Fragment(), View.OnClickListener {
 //        println("xxl-frag-saved: ${savedInstanceState?.getParcelable<InfoManager.Info>("info")}")
 //        println("xxl-frag-sharedInt: ${InfoManager.instance.sharedInt}")
 //        println("xxl-frag-sharedInfo: ${InfoManager.instance.sharedInfo}")
-        println("xxl-frag-static-sharedInt: ${StaticInfo.sharedInt}")
-        println("xxl-frag-static-sharedInfo: ${StaticInfo.sharedInfo}")
+
+//        println("xxl-frag-static-sharedInt: ${StaticInfo.sharedInt}")
+//        println("xxl-frag-static-sharedInfo: ${StaticInfo.sharedInfo}")
+//
 //        println("xxl-frag-sharedInfo: ${ if (InfoManager.instance.propertyInitialized()) InfoManager.instance.sharedInfo else savedInstanceState?.getParcelable<InfoManager.Info>("info")}")
+
+        println("xxl-frag-bundle-Int: ${arguments?.getInt("fromActInt", 0)}")
+        println("xxl-frag-bundle-Obj: ${arguments?.getParcelable<InfoManager.Info>("fromActObj")}")
     }
 
     override fun onCreateView(

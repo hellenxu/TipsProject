@@ -19,7 +19,12 @@ class NestedSampleActivity: AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, LevelOneFragment())
+                .replace(R.id.fragment_container, LevelOneFragment().apply {
+                    val bundle = Bundle()
+                    bundle.putInt("fromActInt", 3)
+                    bundle.putParcelable("fromActObj", InfoManager.Info("qazxsw"))
+                    arguments = bundle
+                })
                 .commit()
         }
     }
