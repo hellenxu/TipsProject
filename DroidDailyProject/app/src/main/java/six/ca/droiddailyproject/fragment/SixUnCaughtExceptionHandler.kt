@@ -20,6 +20,7 @@ class SixUnCaughtExceptionHandler constructor(private val ctx: Context): Thread.
             }
 
         ctx.startActivity(intent)
-        exitProcess(0)
+        Runtime.getRuntime().exit(0)
+//        exitProcess(0)
     }
 }
