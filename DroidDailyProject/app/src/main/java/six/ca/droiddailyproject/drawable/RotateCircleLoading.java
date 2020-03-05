@@ -9,10 +9,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
-import android.view.animation.LinearInterpolator;
-
-import ca.six.util.L;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 /**
  * Created by Xiaolin on 2016-05-31.

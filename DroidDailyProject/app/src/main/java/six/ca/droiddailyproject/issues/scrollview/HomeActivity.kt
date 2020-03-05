@@ -1,7 +1,7 @@
 package six.ca.droiddailyproject.issues.scrollview
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import six.ca.droiddailyproject.R
 
 /**

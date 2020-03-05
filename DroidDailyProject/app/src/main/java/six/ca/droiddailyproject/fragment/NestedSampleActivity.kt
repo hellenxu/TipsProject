@@ -2,7 +2,7 @@ package six.ca.droiddailyproject.fragment
 
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import six.ca.droiddailyproject.R
 
 /**

@@ -1,7 +1,7 @@
 package six.ca.droiddailyproject.arch.db
 
 import android.app.Activity
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import android.os.Bundle
 import android.view.View
 import io.reactivex.Maybe

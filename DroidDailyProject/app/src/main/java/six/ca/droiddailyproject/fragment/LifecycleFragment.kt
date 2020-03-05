@@ -2,7 +2,7 @@ package six.ca.droiddailyproject.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +13,7 @@ import six.ca.droiddailyproject.R
  * @CopyRight six.ca
  * Created by Heavens on 2018-10-02.
  */
-class LifecycleFragment : Fragment() {
+class LifecycleFragment : androidx.fragment.app.Fragment() {
 
     init {
         retainInstance = true

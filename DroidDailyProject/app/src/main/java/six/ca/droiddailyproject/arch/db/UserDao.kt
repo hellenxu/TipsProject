@@ -1,6 +1,6 @@
 package six.ca.droiddailyproject.arch.db
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 /**
  * @CopyRight six.ca

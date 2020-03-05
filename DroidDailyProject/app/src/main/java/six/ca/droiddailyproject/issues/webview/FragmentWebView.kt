@@ -3,7 +3,7 @@ package six.ca.droiddailyproject.issues.webview
 import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.util.DisplayMetrics
 import android.view.*
 import android.view.inputmethod.InputMethodManager
@@ -16,7 +16,7 @@ import six.ca.droiddailyproject.R
  * @date 2019-09-05
  * Copyright 2019 Six. All rights reserved.
  */
-class FragmentWebView: Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
+class FragmentWebView: androidx.fragment.app.Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
     private lateinit var webView: WebView
     private lateinit var scrollView: ScrollView
     private var clickY = 0

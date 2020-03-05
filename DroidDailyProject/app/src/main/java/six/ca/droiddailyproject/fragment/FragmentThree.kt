@@ -4,8 +4,8 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +17,7 @@ import six.ca.droiddailyproject.R
  * @CopyRight six.ca
  * Created by Heavens on 2018-08-19.
  */
-class FragmentThree: Fragment() {
+class FragmentThree: androidx.fragment.app.Fragment() {
 
     val LOCATION_REQUEST_CODE = 0x1
 

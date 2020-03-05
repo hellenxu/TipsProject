@@ -1,23 +1,23 @@
 package six.ca.droiddailyproject.issues.scrollview
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import android.util.SparseArray
 
 /**
  * @CopyRight six.ca
  * Created by Heavens on 2019-01-12.
  */
-class PageAdapter(val fm: FragmentManager?, val num: Int): FragmentPagerAdapter(fm) {
-    private val fragmentArray = SparseArray<Fragment>()
+class PageAdapter(val fm: androidx.fragment.app.FragmentManager?, val num: Int): androidx.fragment.app.FragmentPagerAdapter(fm) {
+    private val fragmentArray = SparseArray<androidx.fragment.app.Fragment>()
 
 
-    override fun getItem(p0: Int): Fragment {
+    override fun getItem(p0: Int): androidx.fragment.app.Fragment {
         return createFragment(pos = p0)
     }
 
-    private fun createFragment(pos: Int): Fragment {
+    private fun createFragment(pos: Int): androidx.fragment.app.Fragment {
         var fragment = fragmentArray.get(pos)
         if(fragment == null) {
             when(pos) {

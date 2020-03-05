@@ -1,6 +1,6 @@
 package six.ca.droiddailyproject.arch.db.migration
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import six.ca.droiddailyproject.arch.db.migration.User
 
 /**

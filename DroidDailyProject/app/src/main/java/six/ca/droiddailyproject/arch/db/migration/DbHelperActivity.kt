@@ -1,7 +1,7 @@
 package six.ca.droiddailyproject.arch.db.migration
 
 import android.app.Activity
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import android.os.Bundle
 import android.view.View
 import six.ca.droiddailyproject.arch.db.migration.AppDb.Companion.MIGRATION_2_3

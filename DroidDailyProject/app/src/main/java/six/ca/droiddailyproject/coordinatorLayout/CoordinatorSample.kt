@@ -2,8 +2,8 @@ package six.ca.droiddailyproject.coordinatorLayout
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.CollapsingToolbarLayout
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.appbar.CollapsingToolbarLayout
+import androidx.appcompat.app.AppCompatActivity
 import six.ca.droiddailyproject.R
 
 /**

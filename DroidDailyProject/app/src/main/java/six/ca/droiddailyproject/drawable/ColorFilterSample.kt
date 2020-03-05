@@ -6,7 +6,7 @@ import android.graphics.ColorMatrixColorFilter
 import android.graphics.LightingColorFilter
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.act_color_filter.*
 import six.ca.droiddailyproject.R
 

@@ -1,7 +1,7 @@
 package six.ca.droiddailyproject.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +14,7 @@ import six.ca.droiddailyproject.SixApplication
  * @date 2020-02-13
  * Copyright 2020 Six. All rights reserved.
  */
-class LevelOneFragment : Fragment(), View.OnClickListener {
+class LevelOneFragment : androidx.fragment.app.Fragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
