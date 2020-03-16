@@ -19,7 +19,7 @@ class LifecycleFragment : androidx.fragment.app.Fragment() {
         retainInstance = true
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         println("xxl-onAttach")
     }

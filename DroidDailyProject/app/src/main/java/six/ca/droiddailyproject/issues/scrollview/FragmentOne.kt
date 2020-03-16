@@ -27,7 +27,7 @@ class FragmentOne: androidx.fragment.app.Fragment() {
         tabs.addTab(tabs.newTab().setText("OneTwo"))
         tabs.addTab(tabs.newTab().setText("OneThree"))
 
-        vp.adapter = PageAdapter(fragmentManager, tabs.tabCount)
+        vp.adapter = fragmentManager?.let { PageAdapter(it, tabs.tabCount) }
         vp.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabReselected(p0: TabLayout.Tab) {
