@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.Observer
 import six.ca.droiddailyproject.R
 import six.ca.droiddailyproject.SixApplication
 
@@ -14,7 +15,8 @@ import six.ca.droiddailyproject.SixApplication
  * @date 2020-02-13
  * Copyright 2020 Six. All rights reserved.
  */
-class LevelOneFragment : androidx.fragment.app.Fragment(), View.OnClickListener {
+class LevelOneFragment : Fragment(), View.OnClickListener {
+    private lateinit var vm: LevelOneVm
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +35,7 @@ class LevelOneFragment : androidx.fragment.app.Fragment(), View.OnClickListener 
         println("xxl-frag-application-Int: ${SixApplication.sharedInt}")
         println("xxl-frag-application-Obj: ${SixApplication.sharedInfo}")
 
+        vm = defaultViewModelProviderFactory.create(LevelOneVm::class.java)
     }
 
     override fun onCreateView(
@@ -51,6 +54,12 @@ class LevelOneFragment : androidx.fragment.app.Fragment(), View.OnClickListener 
                 .addToBackStack(tag)
                 .commit()
         }
+
+        vm.data.observe(viewLifecycleOwner, Observer {
+            println("xxl-vm-data: $it")
+        })
+
+        vm.fetchData()
 
         return rootView
     }
