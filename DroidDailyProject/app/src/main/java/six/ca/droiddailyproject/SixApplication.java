@@ -19,7 +19,7 @@ public class SixApplication extends Application {
         super.onCreate();
         appContext = this;
 
-//        Thread.setDefaultUncaughtExceptionHandler(new SixUnCaughtExceptionHandler(this));
+        Thread.setDefaultUncaughtExceptionHandler(new SixUnCaughtExceptionHandler(this, Thread.getDefaultUncaughtExceptionHandler()));
     }
 
     public static SixApplication getAppContext(){

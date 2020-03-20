@@ -9,10 +9,21 @@ import kotlin.system.exitProcess
  * @date 2020-03-02
  * Copyright 2020 Six. All rights reserved.
  */
-class SixUnCaughtExceptionHandler constructor(private val ctx: Context): Thread.UncaughtExceptionHandler {
+class SixUnCaughtExceptionHandler constructor(private val ctx: Context, private val defaultHandler: Thread.UncaughtExceptionHandler?): Thread.UncaughtExceptionHandler {
 
     override fun uncaughtException(t: Thread?, e: Throwable?) {
-        println("xxl-uncaught: $e")
+        println("xxl-uncaught: $e; default: $defaultHandler")
+
+        try {
+            println("xxl-test00")
+            defaultHandler?.uncaughtException(t, e)
+            println("xxl-test11")
+        } catch (e: Exception) {
+            println("xxl-test-exception: $e")
+        } finally {
+            println("xxl-test-finally")
+        }
+
         val intent =
             Intent(ctx, WelcomeActivity::class.java)
             .apply {
@@ -20,6 +31,7 @@ class SixUnCaughtExceptionHandler constructor(private val ctx: Context): Thread.
             }
 
         ctx.startActivity(intent)
+
         Runtime.getRuntime().exit(0)
 //        exitProcess(0)
     }
