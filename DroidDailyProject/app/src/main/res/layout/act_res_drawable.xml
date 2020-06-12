@@ -11,4 +11,14 @@
             android:background="@drawable/drop_down_bg"
             android:layout_width="match_parent"
             android:layout_height="40dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:gravity="center"
+            android:background="@drawable/btn_bg"
+            android:textAllCaps="false"
+            android:text="Tap more options"
+            android:id="@+id/tv"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
 </LinearLayout>
