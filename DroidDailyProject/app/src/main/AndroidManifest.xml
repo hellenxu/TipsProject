@@ -23,7 +23,9 @@
 
         <activity android:name=".fragment.WelcomeActivity" />
 
-        <activity android:name=".drawable.ResourceDrawableActivity">
+        <activity android:name=".drawable.ResourceDrawableActivity"/>
+
+        <activity android:name=".issues.constraintlayout.SampleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
