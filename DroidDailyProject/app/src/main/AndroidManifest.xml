@@ -25,7 +25,9 @@
 
         <activity android:name=".drawable.ResourceDrawableActivity"/>
 
-        <activity android:name=".issues.constraintlayout.SampleActivity">
+        <activity android:name=".issues.constraintlayout.SampleActivity" />
+
+        <activity android:name=".material.MaterialSample">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

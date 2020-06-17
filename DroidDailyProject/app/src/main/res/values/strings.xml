@@ -65,5 +65,6 @@
     <string name="test_keyboard_and_webview">Test keyboard and webview</string>
     <string name="learn_more">Learn more</string>
     <string name="i_am_loader">I am loader</string>
+    <string name="feedback">Feedback</string>
 
 </resources>
