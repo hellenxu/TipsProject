@@ -27,7 +27,9 @@
 
         <activity android:name=".issues.constraintlayout.SampleActivity" />
 
-        <activity android:name=".material.MaterialSample">
+        <activity android:name=".material.MaterialSample" />
+
+        <activity android:name=".browser.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -66,5 +66,6 @@
     <string name="learn_more">Learn more</string>
     <string name="i_am_loader">I am loader</string>
     <string name="feedback">Feedback</string>
+    <string name="open_custom_tab">open custom tab</string>
 
 </resources>
