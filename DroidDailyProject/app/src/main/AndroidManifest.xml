@@ -29,6 +29,8 @@
 
         <activity android:name=".material.MaterialSample" />
 
+        <activity android:name=".browser.SettingsActivity" />
+
         <activity android:name=".browser.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
