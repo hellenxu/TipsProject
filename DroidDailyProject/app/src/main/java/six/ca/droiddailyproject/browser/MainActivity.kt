@@ -47,7 +47,8 @@ class MainActivity: AppCompatActivity(R.layout.act_browser), View.OnClickListene
                         .addMenuItem(getString(R.string.settings), settingsPendingIntent)
                         .setStartAnimations(this, R.anim.slide_in_right, 0)
                         .build()
-                customIntent.launchUrl(this, Uri.parse("https://www.google.ca/"))
+//                customIntent.launchUrl(this, Uri.parse("https://www.google.ca/"))
+                CustomTabActivityHelper.openCustomTab(this, customIntent, Uri.parse("https://www.google.ca/"), null)
             }
         }
     }

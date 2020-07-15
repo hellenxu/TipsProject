@@ -2,6 +2,7 @@ package six.ca.droiddailyproject;
 
 import android.app.Application;
 
+import six.ca.droiddailyproject.browser.CustomTabActivityLifecycleCallbacks;
 import six.ca.droiddailyproject.fragment.InfoManager;
 import six.ca.droiddailyproject.fragment.SixUnCaughtExceptionHandler;
 
@@ -20,6 +21,8 @@ public class SixApplication extends Application {
         appContext = this;
 
         Thread.setDefaultUncaughtExceptionHandler(new SixUnCaughtExceptionHandler(this, Thread.getDefaultUncaughtExceptionHandler()));
+
+        registerActivityLifecycleCallbacks(new CustomTabActivityLifecycleCallbacks());
     }
 
     public static SixApplication getAppContext(){

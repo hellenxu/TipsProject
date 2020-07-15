@@ -1,8 +1,10 @@
 package six.ca.droiddailyproject.browser
 
 import android.app.Activity
+import android.app.Application
 import android.content.ComponentName
 import android.net.Uri
+import android.os.Bundle
 import androidx.browser.customtabs.*
 
 /**
@@ -42,6 +44,7 @@ object CustomTabActivityHelper {
             ) {
                 client = newClinet
                 client?.warmup(0L)
+                // CustomTabsSession#mayLaunchUrl() may come with battery and network cost
                 connectionCallback?.onCustomTabsConnected()
             }
 
@@ -55,6 +58,7 @@ object CustomTabActivityHelper {
 
         connection = newConnection
         CustomTabsClient.bindCustomTabsService(activity, packageName, newConnection)
+        println("xxl-bindCustomTabsService")
     }
 
     fun unbindCustomTabsService(activity: Activity) {
@@ -63,7 +67,7 @@ object CustomTabActivityHelper {
             client = null
             customTabsSession = null
             connection = null
-
+            println("xxl-unbindCustomTabsService")
         }
     }
 }
@@ -76,4 +80,31 @@ interface ConnectionCallback {
 
 interface CustomTabFallback {
     fun openUri(activity: Activity, uri: Uri)
+}
+
+internal class CustomTabActivityLifecycleCallbacks: Application.ActivityLifecycleCallbacks {
+
+    override fun onActivityPaused(activity: Activity?) = Unit
+
+    override fun onActivityResumed(activity: Activity?) = Unit
+
+    override fun onActivityDestroyed(activity: Activity?) = Unit
+
+    override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) = Unit
+
+    override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
+
+    }
+
+    override fun onActivityStarted(activity: Activity?) {
+        activity?.let {
+            CustomTabActivityHelper.bindCustomTabsService(it)
+        }
+    }
+
+    override fun onActivityStopped(activity: Activity?) {
+        activity?.let {
+            CustomTabActivityHelper.unbindCustomTabsService(it)
+        }
+    }
 }
