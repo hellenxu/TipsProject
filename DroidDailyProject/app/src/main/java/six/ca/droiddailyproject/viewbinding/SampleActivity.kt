@@ -20,6 +20,8 @@ class SampleActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         binding.tvName.text = getString(R.string.hello_word)
+
+        supportFragmentManager.beginTransaction().replace(R.id.content_container, OneFragment()).commit()
     }
 
 }

@@ -31,7 +31,9 @@
 
         <activity android:name=".browser.SettingsActivity" />
 
-        <activity android:name=".browser.MainActivity">
+        <activity android:name=".browser.MainActivity" />
+
+        <activity android:name=".viewbinding.SampleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
