@@ -80,6 +80,9 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':sixlib')
+    implementation project(':lintlib')
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'ca.six.util:LogUtil:1.0.1'
@@ -106,7 +109,6 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.5'
     kapt 'androidx.room:room-compiler:2.2.5'
     implementation 'androidx.room:room-testing:2.2.5'
-    implementation project(':sixlib')
     //rx
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0-RC1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
