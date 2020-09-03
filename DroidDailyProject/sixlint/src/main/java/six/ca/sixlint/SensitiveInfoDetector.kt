@@ -49,7 +49,7 @@ class SensitiveInfoDetector: Detector(), Detector.UastScanner {
             category = Category.SECURITY,
             priority = 7,
             severity = Severity.ERROR,
-            implementation = Implementation(SensitiveInfoDetector::class.java, Scope.ALL)
+            implementation = Implementation(SensitiveInfoDetector::class.java, Scope.JAVA_FILE_SCOPE)
         )
 
         private const val hintMessage = "found out sensitive info: id"
