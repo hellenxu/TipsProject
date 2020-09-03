@@ -2,7 +2,6 @@ package six.ca.sixlint
 
 import com.android.tools.lint.client.api.IssueRegistry
 import com.android.tools.lint.detector.api.CURRENT_API
-import com.android.tools.lint.detector.api.Issue
 
 /**
  * @author hellenxu
@@ -12,7 +11,7 @@ import com.android.tools.lint.detector.api.Issue
 @Suppress("UnstableApiUsage")
 class SixIssueRegistry : IssueRegistry() {
 
-    override val issues: List<Issue> = listOf(SensitiveInfoDetector.ISSUE)
+    override val issues = listOf(SensitiveInfoDetector.ISSUE)
 
     override val api: Int
         get() = CURRENT_API

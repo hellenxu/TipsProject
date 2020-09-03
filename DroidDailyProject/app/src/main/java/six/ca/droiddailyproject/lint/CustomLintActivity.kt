@@ -17,5 +17,6 @@ class CustomLintActivity: AppCompatActivity() {
         val textView = TextView(this)
         textView.text = "12345678"
         println("xxl-id: 098765432")
+        println("xxl-phone: 2304568907")
     }
 }

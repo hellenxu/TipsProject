@@ -43,6 +43,14 @@ android {
         dataBinding true
     }
 
+    lintOptions {
+        htmlReport true
+        textReport true
+        absolutePaths false
+        ignoreTestSources true
+        textOutput 'stdout'
+    }
+
 ////    flavorDimensions Sample
 //    flavorDimensions "prod","isLogo"
 //
