@@ -22,8 +22,11 @@ class SensitiveInfoDetector: Detector(), Detector.UastScanner {
     override fun createUastHandler(context: JavaContext): UElementHandler? {
         return object: UElementHandler() {
             override fun visitLiteralExpression(node: ULiteralExpression) {
+                println("xxl-createUastHandler00")
                 val evaluatedString = node.evaluateString() ?: return
+                println("xxl-createUastHandler11: $evaluatedString")
                 if (evaluatedString.matches(Regex("\\d{7,9}"))) {
+                    println("xxl-createUastHandler22")
                     context.report(ISSUE, node, context.getLocation(node), hintMessage)
                 }
             }

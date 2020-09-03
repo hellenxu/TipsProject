@@ -107,6 +107,8 @@
         </receiver>
 
         <activity android:name=".fragment.DialogActivity"/>
+
+        <activity android:name=".lint.CustomLintActivity" />
     </application>
 
 </manifest>
