@@ -11,7 +11,7 @@ import com.android.tools.lint.detector.api.CURRENT_API
 @Suppress("UnstableApiUsage")
 class SixIssueRegistry : IssueRegistry() {
 
-    override val issues = listOf(SensitiveInfoDetector.ISSUE)
+    override val issues = listOf(SensitiveInfoDetector.JAVA_FILE_ISSUE, SensitiveInfoDetector.RESOURCE_FILE_ISSUE)
 
     override val api: Int
         get() = CURRENT_API
