@@ -1,6 +1,7 @@
 
 package six.ca.sixlint
 
+import com.android.resources.ResourceFolderType
 import com.android.tools.lint.client.api.UElementHandler
 import com.android.tools.lint.detector.api.*
 import org.jetbrains.uast.UElement
@@ -17,7 +18,12 @@ import java.util.*
  */
 
 @Suppress("UnstableApiUsage")
-class SensitiveInfoDetector: Detector(), Detector.UastScanner, Detector.XmlScanner {
+class SensitiveInfoDetector:
+    Detector(),
+    Detector.UastScanner,
+    Detector.XmlScanner,
+    Detector.ResourceFolderScanner
+{
 
     // TODO read rule config files
     override fun beforeCheckEachProject(context: Context) {
@@ -44,7 +50,7 @@ class SensitiveInfoDetector: Detector(), Detector.UastScanner, Detector.XmlScann
 
 
     override fun getApplicableAttributes(): Collection<String>? {
-        return listOf("text")
+        return XmlScannerConstants.ALL
     }
 
     override fun visitAttribute(context: XmlContext, attribute: Attr) {
@@ -57,6 +63,10 @@ class SensitiveInfoDetector: Detector(), Detector.UastScanner, Detector.XmlScann
         }
     }
 
+    override fun appliesTo(folderType: ResourceFolderType): Boolean {
+        val whiteList = listOf(ResourceFolderType.VALUES, ResourceFolderType.DRAWABLE, ResourceFolderType.MIPMAP)
+        return folderType !in whiteList
+    }
 
     companion object {
         private val phoneNumReg = Regex(".*(\\d{3}[-.]?){2}\\d{4}.*")
@@ -75,6 +85,7 @@ class SensitiveInfoDetector: Detector(), Detector.UastScanner, Detector.XmlScann
             )
         )
 
+        @JvmField
         val RESOURCE_FILE_ISSUE = Issue.create(
             id = "id00",
             briefDescription = "Hardcoded id",
