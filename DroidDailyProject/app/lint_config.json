@@ -1,5 +1,4 @@
 {
   "java_white_list": ["tets", ""],
-  "res_white_list": ["12", "33"],
-  "disable_issue_list": ["issue00"]
+  "res_white_list": ["12", "33"]
 }

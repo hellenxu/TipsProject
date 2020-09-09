@@ -1,7 +1,8 @@
 package six.ca.sixlint
 
 import com.android.tools.lint.detector.api.Context
-import com.squareup.moshi.Json
+import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
 import org.jetbrains.kotlin.konan.file.File
 
 /**
@@ -15,17 +16,25 @@ class LintConfigurationReader(context: Context) {
 
     init {
         val path = context.mainProject.dir.path
-        println("xxl-main-project-path: $path")
-        val configFile = File(path, "lint_config.json")
+        val configFile = File(path, CONFIG_FILE)
+        val content = StringBuilder()
         configFile.forEachLine {
-            println("xxl-content: $it")
+            content.append(it)
         }
+
+        // 20200909 couldn't use Moshi as lintAPi isn't friendly enough to Moshi, and exception NoClassDefFoundError will be thrown
+        val config = Gson().fromJson(content.toString(), LintConfig::class.java)
+        println("xxl-config: $config")
+    }
+
+    companion object {
+        private const val CONFIG_FILE = "lint_config.json"
     }
 }
 
 data class LintConfig(
-    @Json(name = "java_white_list")
+    @SerializedName("java_white_list")
     val codeWhiteList: List<String> = emptyList(),
-    @Json(name = "res_white_list")
+    @SerializedName("res_white_list")
     val resWhiteList: List<String> = emptyList()
 )
