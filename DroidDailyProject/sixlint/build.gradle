@@ -15,6 +15,7 @@ dependencies {
     compileOnly "com.android.tools.lint:lint-api:$lintVersion"
     compileOnly "com.android.tools.lint:lint-checks:$lintVersion"
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    compileOnly "com.squareup.moshi:moshi:1.9.3"
 //    testImplementation "junit:junit:4.13"
 //    testImplementation "com.android.tools.lint:lint:$lintVersion"
 //    testImplementation "com.android.tools.lint:lint-tests:$lintVersion"

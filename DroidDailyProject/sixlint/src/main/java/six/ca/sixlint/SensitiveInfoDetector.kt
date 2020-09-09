@@ -8,8 +8,6 @@ import org.jetbrains.uast.UElement
 import org.jetbrains.uast.ULiteralExpression
 import org.jetbrains.uast.evaluateString
 import org.w3c.dom.Attr
-import org.w3c.dom.Document
-import java.util.*
 
 /**
  * @author hellenxu
@@ -24,11 +22,13 @@ class SensitiveInfoDetector:
     Detector.XmlScanner,
     Detector.ResourceFolderScanner
 {
+    private lateinit var lintConfigReader: LintConfigurationReader
 
-    // TODO read rule config files
     override fun beforeCheckEachProject(context: Context) {
         super.beforeCheckEachProject(context)
-        println("xxl-beforeCheckEachProject")
+        if (!this::lintConfigReader.isInitialized) {
+            lintConfigReader = LintConfigurationReader(context)
+        }
     }
 
     // TODO double check whether it's used
