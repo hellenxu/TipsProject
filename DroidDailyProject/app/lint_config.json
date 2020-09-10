@@ -1,4 +1,4 @@
 {
-  "java_white_list": ["tets", ""],
+  "java_white_list": ["CustomLintActivity"],
   "res_white_list": ["12", "33"]
 }

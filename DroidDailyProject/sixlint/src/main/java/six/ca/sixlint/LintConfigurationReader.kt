@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.konan.file.File
 
 @Suppress("UnstableApiUsage")
 class LintConfigurationReader(context: Context) {
+    private val config: LintConfig
 
     init {
         val path = context.mainProject.dir.path
@@ -23,9 +24,12 @@ class LintConfigurationReader(context: Context) {
         }
 
         // 20200909 couldn't use Moshi as lintAPi isn't friendly enough to Moshi, and exception NoClassDefFoundError will be thrown
-        val config = Gson().fromJson(content.toString(), LintConfig::class.java)
+        config = Gson().fromJson(content.toString(), LintConfig::class.java)
         println("xxl-config: $config")
     }
+
+    val javaWhiteList = config.codeWhiteList.filter { it.isNotBlank() }
+    val resWhiteList = config.resWhiteList.filter { it.isNotBlank() }
 
     companion object {
         private const val CONFIG_FILE = "lint_config.json"

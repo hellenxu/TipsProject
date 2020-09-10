@@ -4,10 +4,9 @@ package six.ca.sixlint
 import com.android.resources.ResourceFolderType
 import com.android.tools.lint.client.api.UElementHandler
 import com.android.tools.lint.detector.api.*
-import org.jetbrains.uast.UElement
-import org.jetbrains.uast.ULiteralExpression
-import org.jetbrains.uast.evaluateString
+import org.jetbrains.uast.*
 import org.w3c.dom.Attr
+import java.util.*
 
 /**
  * @author hellenxu
@@ -23,17 +22,23 @@ class SensitiveInfoDetector:
     Detector.ResourceFolderScanner
 {
     private lateinit var lintConfigReader: LintConfigurationReader
+    private lateinit var whiteListVisitor: WhiteListVisitor
 
     override fun beforeCheckEachProject(context: Context) {
         super.beforeCheckEachProject(context)
         if (!this::lintConfigReader.isInitialized) {
             lintConfigReader = LintConfigurationReader(context)
+            whiteListVisitor = WhiteListVisitor(lintConfigReader.javaWhiteList)
         }
     }
 
-    // TODO double check whether it's used
+    // need to return ULiteralExpression as visitLiteralExpression() will be override in method createUastHandler
     override fun getApplicableUastTypes(): List<Class<out UElement>>? {
-        return listOf(ULiteralExpression::class.java)
+        return listOf(UClass::class.java, ULiteralExpression::class.java)
+    }
+
+    override fun getApplicableFiles(): EnumSet<Scope> {
+        return EnumSet.of(Scope.JAVA_FILE)
     }
 
     override fun createUastHandler(context: JavaContext): UElementHandler? {
@@ -44,6 +49,11 @@ class SensitiveInfoDetector:
                     println("xxl-createUastHandler: $evaluatedString")
                     context.report(JAVA_FILE_ISSUE, node, context.getLocation(node), hintMessage)
                 }
+            }
+
+            override fun visitClass(node: UClass) {
+                println("xxl-handler-visitClass")
+                node.accept(WhiteListVisitor(lintConfigReader.javaWhiteList))
             }
         }
     }
