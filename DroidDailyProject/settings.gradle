@@ -1,3 +1,19 @@
 include ':lintlib'
 include ':sixlint'
 include ':app', ':sixlib'
+
+gradle.settingsEvaluated {
+    println "xxl-settings-settingsEvaluated"
+}
+
+gradle.beforeProject {
+    println "xxl-settings-beforeProject"
+}
+
+gradle.afterProject {
+    println "xxl-settings-afterProject"
+}
+
+gradle.beforeSettings {
+    println "xxl-settings-beforeSettings"
+}

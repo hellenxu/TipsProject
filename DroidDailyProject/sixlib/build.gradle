@@ -28,3 +28,24 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
 
 }
+
+
+this.afterEvaluate {
+    println "xxl-lib-afterEvaluate"
+}
+
+gradle.taskGraph.beforeTask {
+    println "xxl-lib-beforeTask"
+}
+
+gradle.taskGraph.afterTask {
+    println "xxl-lib-afterTask"
+}
+
+gradle.buildFinished {
+    println "xxl-lib-buildFinished"
+}
+
+gradle.buildStarted {
+    println "xxl-lib-buildStarted"
+}

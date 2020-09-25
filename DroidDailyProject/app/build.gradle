@@ -156,3 +156,24 @@ configurations {
         }
     }
 }
+
+
+this.afterEvaluate {
+    println "xxl-app-afterEvaluate"
+}
+
+gradle.taskGraph.beforeTask {
+    println "xxl-app-beforeTask"
+}
+
+gradle.taskGraph.afterTask {
+    println "xxl-app-afterTask"
+}
+
+gradle.buildFinished {
+    println "xxl-app-buildFinished"
+}
+
+gradle.buildStarted {
+    println "xxl-app-buildStarted"
+}

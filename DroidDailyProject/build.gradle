@@ -30,3 +30,24 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+this.afterEvaluate {
+    println "xxl-root-afterEvaluate"
+}
+
+gradle.taskGraph.beforeTask {
+    println "xxl-root-beforeTask"
+}
+
+gradle.taskGraph.afterTask {
+    println "xxl-root-afterTask"
+}
+
+gradle.buildFinished {
+    println "xxl-root-buildFinished"
+}
+
+gradle.buildStarted {
+    println "xxl-root-buildStarted"
+}
