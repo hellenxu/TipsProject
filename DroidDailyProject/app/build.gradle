@@ -177,3 +177,5 @@ gradle.buildFinished {
 gradle.buildStarted {
     println "xxl-app-buildStarted"
 }
+
+task runLintOnAllModule(dependsOn: ["lintDebug", "lintRelease"])
