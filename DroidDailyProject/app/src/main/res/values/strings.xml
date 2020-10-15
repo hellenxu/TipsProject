@@ -68,5 +68,9 @@
     <string name="feedback">Feedback</string>
     <string name="open_custom_tab">open custom tab</string>
     <string name="settings">Settings</string>
+    <string name="home">Home</string>
+    <string name="test">Test</string>
+    <string name="code">Code</string>
+    <string name="plans">Plans</string>
 
 </resources>
