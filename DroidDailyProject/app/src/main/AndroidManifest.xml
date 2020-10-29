@@ -35,7 +35,9 @@
 
         <activity android:name=".viewbinding.SampleActivity" />
 
-        <activity android:name=".hilt.ProfileActivity">
+        <activity android:name=".hilt.ProfileActivity" />
+
+        <activity android:name=".issues.TextNotShowAllActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
